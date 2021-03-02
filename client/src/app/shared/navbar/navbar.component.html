@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="500">
+    <div class="mx-5 d-flex w-100">
+        <div class="navbar-translate">
+            <a class="navbar-brand">ELROI VN</a>
+            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+            </button>
+        </div>
+       
+        <div class="navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav w-100">
+                <ng-container>
+                    <li class="nav-item" *ngIf="!isDocumentation()">
+                        <div ngbDropdown class="d-inline-block dropdown">
+                            <a class="nav-link px-0" ngbDropdownToggle>Sản phẩm</a>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-default">
+                                    <a class="dropdown-item">Áo</a>
+                                    <a class="dropdown-item">Quần</a>
+                                   <a class="dropdown-item">Phụ kiện</a>
+                                   <a class="dropdown-item">Giày</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item" *ngIf="!isDocumentation()">
+                            <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom">
+                                <p>Sản phẩm mới</p>
+                            </a>
+                        </li>
+                        <li class="nav-item mr-auto" *ngIf="!isDocumentation()">
+                            <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom">
+                                <p>SALE</p>
+                              
+                        </a>
+                    </li>
+                    
+                </ng-container>
+               <ng-container>
+                <li class="nav-item">
+                    <a class="btn  btn-just-icon"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn  btn-just-icon notification"><i class="fa fa-shopping-bag" aria-hidden="true"><span class="badge">{{countCart}}</span></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-danger btn-round">
+                        <span *ngIf="user">Hi! {{user.username}}</span>
+                        <span *ngIf="!user">Đăng nhập</span>
+
+                    </a>
+                </li>
+            
+               </ng-container>
+             
+              
+            </ul>
+         
+        </div>
+    </div>
+</nav>
