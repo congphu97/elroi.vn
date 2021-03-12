@@ -1,61 +1,113 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="500">
-    <div class="mx-5 d-flex w-100">
-        <div class="navbar-translate">
-            <a class="navbar-brand">ELROI VN</a>
-            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
+<nav class="p-0 navbar navbar-expand-lg fixed-top navbar-transparent shadow-sm " color-on-scroll="500">
+    <div class="container">
+        <div class="navbar-translate d-flex w-100">
+            <a class="navbar-brand" style="color:black" [routerLink]="['/home']">Joelandrachel.VN</a>
+            <div class="d-lg-block d-none nav-item">
+                <ul class="navbar-nav w-100">
+                    <li class="pt-1 ">
+                        <a nz-dropdown class="nav-link" rel="tooltip" title="Like us on Facebook"
+                            data-placement="bottom" [nzDropdownMenu]="menu1" (nzVisibleChange)="change($event)">
+                            <p>NAM</p>
+                        </a>
+                        <nz-dropdown-menu #menu1="nzDropdownMenu">
+                            <ul nz-menu>
+                                <li nz-menu-item>Áo</li>
+                                <li nz-menu-item>Áo khoác</li>
+                                <li nz-submenu nzTitle="Quần">
+                                    <ul>
+                                        <li nz-menu-item>Quần đùi</li>
+                                        <li nz-menu-item>Quần dài</li>
+                                    </ul>
+                                </li>
+                                <li nz-menu-item>Giày</li>
+                                <li nz-menu-item>Phụ kiện</li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </li>
+                    <li class="pt-1 ">
+                        <a nz-dropdown class="nav-link" rel="tooltip" title="Like us on Facebook"
+                            data-placement="bottom" [nzDropdownMenu]="menu2" (nzVisibleChange)="change($event)">
+                            <p>NỮ</p>
+                        </a>
+                        <nz-dropdown-menu #menu2="nzDropdownMenu">
+                            <ul nz-menu>
+                                <li nz-menu-item>Áo</li>
+                                <li nz-menu-item>Áo khoác</li>
+                                <li nz-submenu nzTitle="Quần">
+                                    <ul>
+                                        <li nz-menu-item>Quần đùi</li>
+                                        <li nz-menu-item>Quần dài</li>
+                                    </ul>
+                                </li>
+                                <li nz-menu-item>Giày</li>
+                                <li nz-menu-item>Phụ kiện</li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </li>
+                    <li class="pt-1 ">
+                        <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom">
+                            <p>Sản phẩm mới</p>
+                        </a>
+                    </li>
+                    <li class="pt-1 ">
+                        <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom">
+                            <p>Khuyến mãi</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="navbar-nav ml-auto flex-row d-flex">
+
+                <li class="nav-item" *ngIf="!isDocumentation()">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom">
+                        <span class="notification">
+                            <img src="../../../assets/svg/shopping-bag.png" height="20px" [routerLink]="['/cart']" />
+                            <span class="badge">{{countCart}}</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="!isDocumentation()">
+                    <a *ngIf="!user" class="nav-link" rel="tooltip" title="Đăng nhập" data-placement="bottom">
+                        <img src="../../../assets/svg/user.png" [routerLink]="['/signup']" height="20px" />
+                    </a>
+                    <a *ngIf="user" nz-dropdown class="nav-link" rel="tooltip" title="Hi {{user.username}}"
+                        data-placement="bottom" [nzDropdownMenu]="menu4">
+                        <div nz-dropdown class="bg-black"> {{user.username}}
+                        </div>
+                    </a>
+
+                    <nz-dropdown-menu #menu4="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item [routerLink]="['/admin']">Quản lý</li>
+                            <li nz-menu-item [routerLink]="['/profile']">Hồ sơ</li>
+                            <li nz-menu-item (click)="logout()">Đăng xuất</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </li>
+                <li class="nav-item" *ngIf="!isDocumentation()">
+                    <a nz-dropdown class="nav-link text-lowercase" rel="tooltip" title="Follow us on Twitter"
+                        data-placement="bottom" [nzDropdownMenu]="menu3">
+                        <img height="20px"
+                            src="https://i.pinimg.com/originals/6a/64/cc/6a64ccd5e65bf699e1294320db23792c.png">
+                    </a>
+                    <nz-dropdown-menu #menu3="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item (click)="logout()">Tiếng Việt</li>
+                            <li nz-menu-item (click)="logout()">English</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse"
+                data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                aria-label="Toggle navigation" (click)="sidebarToggle()">
                 <span class="navbar-toggler-bar"></span>
                 <span class="navbar-toggler-bar"></span>
                 <span class="navbar-toggler-bar"></span>
             </button>
         </div>
-       
         <div class="navbar-collapse" id="navbarToggler">
-            <ul class="navbar-nav w-100">
-                <ng-container>
-                    <li class="nav-item" *ngIf="!isDocumentation()">
-                        <div ngbDropdown class="d-inline-block dropdown">
-                            <a class="nav-link px-0" ngbDropdownToggle>Sản phẩm</a>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-default">
-                                    <a class="dropdown-item">Áo</a>
-                                    <a class="dropdown-item">Quần</a>
-                                   <a class="dropdown-item">Phụ kiện</a>
-                                   <a class="dropdown-item">Giày</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item" *ngIf="!isDocumentation()">
-                            <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom">
-                                <p>Sản phẩm mới</p>
-                            </a>
-                        </li>
-                        <li class="nav-item mr-auto" *ngIf="!isDocumentation()">
-                            <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom">
-                                <p>SALE</p>
-                              
-                        </a>
-                    </li>
-                    
-                </ng-container>
-               <ng-container>
-                <li class="nav-item">
-                    <a class="btn  btn-just-icon"><i class="fa fa-globe" aria-hidden="true"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn  btn-just-icon notification"><i class="fa fa-shopping-bag" aria-hidden="true"><span class="badge">{{countCart}}</span></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-danger btn-round">
-                        <span *ngIf="user">Hi! {{user.username}}</span>
-                        <span *ngIf="!user">Đăng nhập</span>
 
-                    </a>
-                </li>
-            
-               </ng-container>
-             
-              
-            </ul>
-         
         </div>
     </div>
 </nav>

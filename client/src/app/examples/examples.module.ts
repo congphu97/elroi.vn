@@ -8,7 +8,19 @@ import { ProfileComponent } from "./profile/profile.component";
 import { SignupComponent } from "./signup/signup.component";
 import { ProductDetailComponent } from "./product-detail/product-detail.component";
 import { CookieModule } from "ngx-cookie";
-
+import { ManagerComponent } from './manager/manager.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ProductService } from "./services/product.service";
+import { HttpClientModule } from "@angular/common/http";
+import { PaymentComponent } from './payment/payment.component';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { ProductComponent } from './product/product.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,12 +28,24 @@ import { CookieModule } from "ngx-cookie";
     ReactiveFormsModule,
     NgbModule,
     CookieModule.forRoot(),
+    NzTableModule,
+    NzModalModule,
+    HttpClientModule,
+    NzImageModule, NzStepsModule,
+    NzDividerModule,NzResultModule,NzTabsModule,
+    NzSelectModule
   ],
   declarations: [
     LandingComponent,
     SignupComponent,
     ProfileComponent,
     ProductDetailComponent,
+    ManagerComponent,
+    PaymentComponent,
+    ProductComponent,
   ],
+  providers: [
+    ProductService
+  ]
 })
-export class ExamplesModule {}
+export class ExamplesModule { }

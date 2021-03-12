@@ -9,9 +9,6 @@ import { AuthService } from "app/shared/auth/auth.service";
   styleUrls: ["./signup.component.scss"],
 })
 export class SignupComponent implements OnInit {
-  test: Date = new Date();
-  focus;
-  focus1;
   constructor(private authService: AuthService, private router: Router) {}
   public formLogin = new FormGroup({
     username: new FormControl("", Validators.required),

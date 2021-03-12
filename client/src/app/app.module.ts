@@ -16,6 +16,10 @@ import { JwtInterceptor } from "./shared/interceptors/interceptor.component";
 import { JwtHelperService, JWT_OPTIONS } from "@auth0/angular-jwt";
 import { AuthService } from "./shared/auth/auth.service";
 import { CookieModule } from "ngx-cookie";
+import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NzIconModule } from "ng-zorro-antd/icon";
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, FooterComponent],
@@ -24,12 +28,14 @@ import { CookieModule } from "ngx-cookie";
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     RouterModule,
     ComponentsModule,
     ExamplesModule,
     AppRoutingModule,
     HttpClientModule,
-    CookieModule.forRoot()
+    CookieModule.forRoot(),
+    NzIconModule, NzDropDownModule,
   ],
   providers: [
     JwtHelperService,
@@ -40,8 +46,11 @@ import { CookieModule } from "ngx-cookie";
       useClass: JwtInterceptor,
       multi: true,
     },
-    
+    { provide: NZ_I18N, useValue: en_US }
+
+
+
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

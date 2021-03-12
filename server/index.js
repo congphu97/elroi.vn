@@ -31,7 +31,8 @@ mongoose.connect(
   }
 );
 const User = require("./model/user.model");
-
+const Product = require("./model/product.model");
+const Order = require("./model/order.model");
 //JWT
 var jwt = require("jsonwebtoken");
 var serect = "abcdef";
@@ -120,6 +121,107 @@ app.get("/login/:pw", function (req, res) {
   });
 });
 
+
+// Product
+app.get('/product', function (req, res) {
+  Product.find(function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+
+})
+
+app.get('/product/:id', function (req, res) {
+  Product.findById(req.params.id, function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+
+})
+
+
+app.post("/product", function (req, res) {
+  var product = new Product(req.body)
+  product.save(function (err) {
+    if (err) {
+      res.json({ kq: 0, ErrMesg: err });
+    } else res.json(req.body);
+  });
+});
+
+app.put("/product/:id", function (req, res) {
+  const id = req.params.id
+  Product.findByIdAndUpdate(id, req.body, function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+});
+
+app.delete("/product/:id", function (req, res) {
+  const id = req.params.id
+  Product.findByIdAndDelete(id, function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+});
+// Order
+app.get('/order', function (req, res) {
+  Order.find(function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+
+})
+
+app.get('/order/:id', function (req, res) {
+  Order.findById(req.params.id, function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+
+})
+
+
+app.post("/order", function (req, res) {
+  var order = new Order(req.body)
+  order.save(function (err) {
+    if (err) {
+      res.json({ kq: 0, ErrMesg: err });
+    } else res.json(req.body);
+  });
+});
+
+app.put("/order/:id", function (req, res) {
+  const id = req.params.id
+  Order.findByIdAndUpdate(id, req.body, function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+});
+
+app.delete("/order/:id", function (req, res) {
+  const id = req.params.id
+  Order.findByIdAndDelete(id, function (err, data) {
+    console.log({ data })
+    if (err) {
+      return res.json({ kq: 0, ErrMesg: err });
+    } else return res.json(data)
+  })
+});
 // ----------------------Tong hop: --------------------------------
 
 //multer

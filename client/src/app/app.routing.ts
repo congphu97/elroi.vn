@@ -10,29 +10,29 @@ import { LandingComponent } from "./examples/landing/landing.component";
 import { NucleoiconsComponent } from "./components/nucleoicons/nucleoicons.component";
 import { ProductDetailComponent } from "./examples/product-detail/product-detail.component";
 import { AuthGuard } from "./shared/guard/guard.component";
+import { ManagerComponent } from "./examples/manager/manager.component";
+import { PaymentComponent } from "./examples/payment/payment.component";
+import { ProductComponent } from "./examples/product/product.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: ComponentsComponent },
-  { path: "user-profile", component: ProfileComponent },
+  { path: "profile", canActivate: [AuthGuard], component: ProfileComponent },
+  { path: "admin", component: ManagerComponent },
   { path: "signup", component: SignupComponent },
-  { path: "landing", component: LandingComponent },
-  { path: "detail", component: ProductDetailComponent },
-
+  { path: "cart", component: LandingComponent },
+  { path: "payment", component: PaymentComponent },
+  { path: "product/:id", component: ProductComponent },
+  { path: "detail/:id", component: ProductDetailComponent },
   { path: "nucleoicons", component: NucleoiconsComponent },
   {
-    path: '',
-    canActivate: [AuthGuard],
-    component: ComponentsComponent,
+    path: 'login',
+    component: SignupComponent,
   },
-    {
-      path: 'login',
-      component: SignupComponent,
-    },
-    {
-      path: 'register',
-      component: SignupComponent,
-    },
+  {
+    path: 'register',
+    component: SignupComponent,
+  },
 ];
 
 @NgModule({
@@ -45,4 +45,4 @@ const routes: Routes = [
   ],
   exports: [],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

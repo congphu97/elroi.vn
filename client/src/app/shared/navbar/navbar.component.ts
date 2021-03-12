@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -9,22 +10,24 @@ import { AuthService } from '../auth/auth.service';
 })
 export class NavbarComponent implements OnInit {
     private toggleButton: any;
-    public countCart:number = 0
+    public countCart: number = 0
     private sidebarVisible: boolean;
     public user;
-    constructor(public location: Location, private element : ElementRef,private authService: AuthService) {
+    constructor(public location: Location, private element: ElementRef, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
         this.sidebarVisible = false;
+        this.authService.setSubmit()
     }
 
     ngOnInit() {
-        this.authService.getSubmit().subscribe((user) =>  {
+        this.authService.isAuthenticated() ? this.user = this.authService.getAuthenticated() : null
+        this.authService.getSubmit().subscribe((user) => {
             this.user = user;
-        this.countCart = JSON.parse(localStorage.getItem('cart')).length;
+            this.countCart =  JSON.parse(localStorage.getItem('cart'))?.length || 0;
 
         });
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-        
+
     }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -32,7 +35,7 @@ export class NavbarComponent implements OnInit {
         // console.log(html);
         // console.log(toggleButton, 'toggle');
 
-        setTimeout(function(){
+        setTimeout(function () {
             toggleButton.classList.add('toggled');
         }, 500);
         html.classList.add('nav-open');
@@ -56,11 +59,11 @@ export class NavbarComponent implements OnInit {
         }
     };
     isHome() {
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 1 );
-      }
-        if( titlee === '/home' ) {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        if (titlee.charAt(0) === '#') {
+            titlee = titlee.slice(1);
+        }
+        if (titlee === '/home') {
             return true;
         }
         else {
@@ -68,15 +71,19 @@ export class NavbarComponent implements OnInit {
         }
     }
     isDocumentation() {
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 1 );
-      }
-        if( titlee === '/documentation' ) {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        if (titlee.charAt(0) === '#') {
+            titlee = titlee.slice(1);
+        }
+        if (titlee === '/documentation') {
             return true;
         }
         else {
             return false;
         }
+    }
+
+    logout() {
+        this.authService.logout()
     }
 }
