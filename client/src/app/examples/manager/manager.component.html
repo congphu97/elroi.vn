@@ -1,29 +1,64 @@
 <div class="wrapper">
     <div class="page-header page-header-xs" data-parallax="true"
-    style="background-image: url('./assets/img/fabio-mangione.jpg');">
-    <div class="filter"></div>
-</div>
+        style="background-image: url('./assets/img/fabio-mangione.jpg');">
+        <div class="filter"></div>
+    </div>
 </div>
 <div class="d-flex container">
     <nz-tabset>
         <nz-tab nzTitle="Quản lý đơn hàng">
-            Content of Tab Pane 2
+            <nz-table nzBordered [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
+                [nzNoResult]="'Bạn chưa có đơn hàng nào'">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Thời gian đặt</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                        <th>Địa chỉ</th>
+                        <th>Tổng đơn hàng</th>
+                        <th>Tình trạng giao hàng</th>
+                        <th>Thao tác</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orderTable;let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ order.createdAt }}</td>
+                        <td>{{ order.customerName }}</td>
+                        <td>{{ order.numberPhone }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>{{ order.totalPrice | currency : "VND":true }}</td>
+                        <td>
+                            <nz-switch [(ngModel)]="order.status" (ngModelChange)="changeStatus(order)"></nz-switch>
+                        </td>
+
+                        <td>
+                            <!-- <button (click)='openModalUpdate(product)'>Chỉnh sửa</button> -->
+                            <button (click)='openModalDelete(product)'>Xóa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
         </nz-tab>
         <nz-tab nzTitle="Quản lý sản phẩm">
             <button (click)="openModalCreate()" class="m-2">Thêm sản phẩm</button>
             <nz-table nzBordered #basicTable [nzData]="productTable" [nzFrontPagination]="false"
-                [nzShowPagination]="false">
+                [nzNoResult]="'Bạn chưa có sản phẩm nào'" [nzShowPagination]="false">
                 <thead>
                     <tr>
                         <th>STT</th>
+                        <th>Hình ảnh</th>
                         <th>Tên sản phầm</th>
                         <th>Danh mục</th>
                         <th>Ghi chú</th>
                         <th>Giá</th>
                         <th>Kích cỡ</th>
-                        <th>Đường dẫn </th>
                         <th>Tình trạng </th>
-                        <th>% khuyến mãi </th>
+                        <th>Chiết khấu</th>
                         <th>Thao tác</th>
 
                     </tr>
@@ -31,14 +66,18 @@
                 <tbody>
                     <tr *ngFor="let product of basicTable.data;let i = index">
                         <td>{{ i + 1 }}</td>
+                        <td>
+                            <span *ngFor="let img of product.imgProduct">
+                                <img src="http://localhost:8080/{{img}}" height=30px width="30px"/>
+                            </span>
+                        </td>
                         <td>{{ product.productName }}</td>
                         <td>{{ product.category }}</td>
                         <td>{{ product.note }}</td>
-                        <td>{{ product.price }}</td>
+                        <td>{{ product.price | currency : "VND":true }}</td>
                         <td>{{ product.size }}</td>
-                        <td>{{ product.imgProduct }}</td>
                         <td>{{ product.status }}</td>
-                        <td>{{ product.priceSale }}</td>
+                        <td>- {{ product.priceSale || 0}} %</td>
 
                         <td>
                             <button (click)='openModalUpdate(product)'>Chỉnh sửa</button>
@@ -48,7 +87,7 @@
                 </tbody>
             </nz-table>
         </nz-tab>
-     
+
         <nz-tab nzTitle="Cấu hình ảnh bìa">
             Content of Tab Pane 3
         </nz-tab>
@@ -65,10 +104,18 @@
         <div class="d-flex">
             <label class="col-3 p-2">Danh mục</label>
             <select class="form-control" formControlName='category'>
-                <option>Quần</option>
-                <option>Áo</option>
-                <option>Áo khoác</option>
-                <option>Phụ kiện</option>
+                <option ngValue='ao-nam'>Áo Nam</option>
+                <option ngValue='ao-khoac-nam'>Áo khoác nam</option>
+                <option ngValue='quan-dui-nam'>Quần đùi nam</option>
+                <option ngValue='quan-dai-nam'>Quần dài nam</option>
+                <option ngValue='giay-nam'>Giày nam</option>
+                <option ngValue='phu-kien-nam'>Phụ kiện nam</option>
+                <option ngValue='ao-nu'>Áo Nữ</option>
+                <option ngValue='ao-khoac-nu'>Áo khoác nữ</option>
+                <option ngValue='quan-dui-nu'>Quần đùi nữ</option>
+                <option ngValue='quan-dai-nu'>Quần dài nữ</option>
+                <option ngValue='giay-nu'>Giày nữ</option>
+                <option ngValue='phu-kien-nu'>Phụ kiện nữ</option>
             </select>
         </div>
 
@@ -97,11 +144,16 @@
             <label class="col-3 p-2">Kích cỡ</label>
             <input type="text" class="form-control" formControlName='size' />
         </div>
-        <div class="d-flex">
+        <!-- <div class="d-flex">
             <label class="col-3 p-2">Đường dẫn hình ảnh</label>
-            <input type="file" formControlName='imgProduct' multiple accept=".jpg, .jpeg, .png">
-        </div>
+            <input type="file" (change)="fileChoose($event)" #UploadFileInput>
+        </div> -->
     </form>
+    <label class="col-3 p-2">Hình ảnh</label>
+    <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload a file..." multiple />
+    <div>
+        <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
+    </div>
 </nz-modal>
 <nz-modal [(nzVisible)]="isVisibleDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
     (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteProduct(product._id)">

@@ -1,0 +1,91 @@
+<div class="wrapper">
+    <div class="page-header" style="background-image: url('./assets/img/login-image.jpg');">
+        <div class="filter"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
+                    <div class="card card-register">
+                        <h3 class="title">Đăng ký</h3>
+                        <form [formGroup]="formLogin" class="register-form">
+                            <label>Tên tài khoản</label>
+                            <div class="input-group form-group-no-border"
+                                [ngClass]="{'input-group-focus':focus===true}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="nc-icon nc-single-02"></i>
+                                    </span>
+                                </div>
+
+                                <input type="text" class="form-control" placeholder="Nhập tên tài khoản"
+                                    formControlName="username" (focus)="focus=true" (blur)="focus=false" autocomplete="false">
+                            </div>
+
+                            <label>Mật khẩu</label>
+                            <div class="input-group form-group-no-border"
+                                [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="nc-icon nc-key-25"></i>
+                                    </span>
+                                </div>
+                                <input type="password" class="form-control" placeholder="Nhập mật khẩu"
+                                    formControlName="password" (focus)="focus1=true" (blur)="focus1=false" autocomplete="false">
+                            </div>
+
+                            <label>Họ và tên</label>
+                            <div class="input-group form-group-no-border"
+                                [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="nc-icon nc-notes"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Nhập họ và tên"
+                                    formControlName="name" (focus)="focus1=true" (blur)="focus1=false" autocomplete="false">
+                            </div>
+
+                            <label>Email</label>
+                            <div class="input-group form-group-no-border"
+                                [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="nc-icon nc-email-85"></i>
+                                    </span>
+                                </div>
+                                <input type="email" class="form-control" placeholder="Nhập Email"
+                                    formControlName="email" (focus)="focus1=true" (blur)="focus1=false" autocomplete="false">
+                            </div>
+                            <label>Ngày sinh</label>
+                            <div class="input-group form-group-no-border"
+                                [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="nc-icon nc-key-25"></i>
+                                    </span>
+                                </div>
+                                <input type="date" class="form-control" placeholder="Chọn ngày sinh"
+                                    formControlName="birthday" (focus)="focus1=true" (blur)="focus1=false" autocomplete="false">
+                            </div>
+
+                            <label>Số điện thoại</label>
+                            <div class="input-group form-group-no-border"
+                                [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="nc-icon nc-key-25"></i>
+                                    </span>
+                                </div>
+                                <input type="number" class="form-control" placeholder="Nhập số điện thoại"
+                                    formControlName="phone" (focus)="focus1=true" (blur)="focus1=false" autocomplete="false">
+                            </div>
+                            <button class="btn btn-danger btn-block btn-round" (click)="register(formLogin)">Đăng kí</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer register-footer text-center">
+                <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
+            </div>
+        </div>
+    </div>
+</div>

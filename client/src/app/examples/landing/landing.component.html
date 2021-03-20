@@ -17,8 +17,8 @@
                                     Tổng số đơn hàng: {{count}}
                                 </h5>
                                 <br>
-                                <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]="false"
-                                    [nzNoResult]="'Bạn chưa có đơn hàng nào'" [nzShowPagination]="false">
+                                <nz-table #basicTable [nzData]="listCart" [nzFrontPagination]="false" [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
+                                    [nzShowPagination]="false">
                                     <thead>
                                         <tr>
                                             <th>STT</th>
@@ -30,12 +30,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let data of basicTable.data;let i = index">
+                                        <tr *ngFor="let data of listOfData;let i = index">
                                             <td>{{ i +1 }}</td>
-                                            <td>{{ data.age }}</td>
-                                            <td>{{ data.name }}</td>
-                                            <td>{{ data.age }}</td>
-                                            <td>{{ data.address }}</td>
+                                            <td>{{ data.product.productName }}</td>
+                                            <td>{{ data.number }}</td>
+                                            <td>{{ data.product.size }}</td>
+                                            <td>{{ data.product.price }}</td>
                                             <td>
                                                 <button>Hủy bỏ</button>
                                             </td>
@@ -47,23 +47,23 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="1" class="d-flex">
-                        <div class="col-6">
+                        <form class="col-6" [formGroup]="orderForm">
                             <h6>Thông tin giao hàng:</h6>
-                            <div class="d-flex">
+                            <div class="d-flex  m-1">
                                 <label class="col-3">Họ và tên</label>
-                                <input class="form-control">
+                                <input class="form-control" formControlName="username" [attr.disabled]="checkDisable('username')">
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex  m-1">
                                 <label class="col-3">Email</label>
-                                <input class="form-control">
+                                <input class="form-control"  formControlName="email" >
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex  m-1">
                                 <label class="col-3">Số điện thoại</label>
-                                <input class="form-control">
+                                <input class="form-control"  formControlName="phone">
                             </div>
-                            <div class="d-flex">
-                                <label class="col-3">Địa chỉ</label>
-                                <input class="form-control">
+                            <div class="d-flex m-1">
+                                <label class="col-3">Địa chỉ giao hàng</label>
+                                <input class="form-control"  formControlName="address">
                             </div>
                             <div>
                                 Lưu ý:
@@ -81,7 +81,7 @@
                                     3. Thực hiện thanh toán như tổng hoá đơn đã được xác nhận. Vui lòng lại hoá đơn được
                                     đính kèm ở đơn hàng để được hỗ trợ đổi (nếu có). <br></p>
                             </div>
-                        </div>
+                        </form>
                         <div class="col-6">
                             Flex 2
                         </div>
@@ -95,7 +95,7 @@
             </div>
             <div class="steps-action">
                 <div *ngIf="current === 0">
-                    <button class="btn" nzType="default" (click)="next()">
+                    <button class="btn" nzType="default" [disabled]="listCart?.length < 1" (click)="next()">
                         Thanh toán
                     </button>
                 </div>
@@ -103,17 +103,15 @@
                     <button class="btn" nzType="default" (click)="pre()">
                         Giỏ hàng
                     </button>
-                    <button class="btn" nzType="default" (click)="next()">
+                    <button class="btn" nzType="default" (click)="complete()">
                         Hoàn tất đơn hàng
                     </button>
                 </div>
                 <div *ngIf="current === 2">
-                    <button class="btn" nzType="default" (click)="pre()">
+                    <button class="btn" nzType="default" (click)="done()">
                         Tiếp tục mua sắm
                     </button>
-                    <button class="btn" nzType="primary" (click)="done()">
-                        Xác nhận
-                    </button>
+            
                 </div>
             </div>
         </div>

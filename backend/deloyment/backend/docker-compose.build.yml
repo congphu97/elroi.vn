@@ -1,0 +1,7 @@
+version: '3'
+services:
+  backend:
+    image: congphu2210/backend:nodejs
+    build:
+      context: ../../
+      dockerfile: ./Dockerfile

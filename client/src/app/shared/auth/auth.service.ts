@@ -8,7 +8,7 @@ import { Subject } from "rxjs";
 })
 export class AuthService {
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
-  private baseUrl = "http://localhost:3000/";
+  private baseUrl = "http://localhost:8080/";
   public submit$$ = new Subject();
   login(body) {
     return this.http.post(this.baseUrl + "login", body).pipe(
@@ -23,6 +23,11 @@ export class AuthService {
 
   register(body) {
     return this.http.post(this.baseUrl + "createUser", body);
+  }
+
+  getUser(body) {
+    return this.http.post(this.baseUrl + "getUser", body);
+
   }
 
   isAuthenticated(): boolean {

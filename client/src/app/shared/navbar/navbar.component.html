@@ -5,67 +5,73 @@
             <div class="d-lg-block d-none nav-item">
                 <ul class="navbar-nav w-100">
                     <li class="pt-1 ">
-                        <a nz-dropdown class="nav-link" rel="tooltip" title="Like us on Facebook"
-                            data-placement="bottom" [nzDropdownMenu]="menu1" (nzVisibleChange)="change($event)">
-                            <p>NAM</p>
+                        <a nz-dropdown class="nav-link" rel="tooltip" data-placement="bottom" [nzDropdownMenu]="menu1">
+                            <p>{{'NAVBAR.male.title' | translate}}</p>
                         </a>
                         <nz-dropdown-menu #menu1="nzDropdownMenu">
                             <ul nz-menu>
-                                <li nz-menu-item>Áo</li>
-                                <li nz-menu-item>Áo khoác</li>
-                                <li nz-submenu nzTitle="Quần">
+                                <li nz-menu-item [routerLink]="['/product', 'ao-nam']">{{'NAVBAR.male.children.menu1' |
+                                    translate}}</li>
+                                <li nz-menu-item [routerLink]="['/product', 'ao-khoac-nam']">
+                                    {{'NAVBAR.male.children.menu2' | translate}}</li>
+                                <li nz-submenu nzTitle="{{'NAVBAR.male.children.menu3' | translate}}"
+                                    [routerLink]="['/product', 'quan-nam']">
                                     <ul>
-                                        <li nz-menu-item>Quần đùi</li>
-                                        <li nz-menu-item>Quần dài</li>
+                                        <li nz-menu-item [routerLink]="['/product', 'quan-dui-nam']">
+                                            {{'NAVBAR.male.children.menu4' | translate}}</li>
+                                        <li nz-menu-item [routerLink]="['/product', 'quan-dai-nam']">
+                                            {{'NAVBAR.male.children.menu5' | translate}}</li>
                                     </ul>
                                 </li>
-                                <li nz-menu-item>Giày</li>
-                                <li nz-menu-item>Phụ kiện</li>
+                                <li nz-menu-item [routerLink]="['/product', 'giay-nam']">{{'NAVBAR.male.children.menu6'
+                                    | translate}}</li>
+                                <li nz-menu-item [routerLink]="['/product', 'phu-kien-nam']">
+                                    {{'NAVBAR.male.children.menu7' | translate}}</li>
                             </ul>
                         </nz-dropdown-menu>
                     </li>
                     <li class="pt-1 ">
                         <a nz-dropdown class="nav-link" rel="tooltip" title="Like us on Facebook"
-                            data-placement="bottom" [nzDropdownMenu]="menu2" (nzVisibleChange)="change($event)">
-                            <p>NỮ</p>
+                            data-placement="bottom" [nzDropdownMenu]="menu2">
+                            <p>{{'NAVBAR.female.title' | translate}}</p>
                         </a>
                         <nz-dropdown-menu #menu2="nzDropdownMenu">
                             <ul nz-menu>
-                                <li nz-menu-item>Áo</li>
-                                <li nz-menu-item>Áo khoác</li>
-                                <li nz-submenu nzTitle="Quần">
+                                <li nz-menu-item [routerLink]="['/product', 'ao-nu']">{{'NAVBAR.female.children.menu1' |
+                                    translate}}</li>
+                                <li nz-menu-item [routerLink]="['/product', 'ao-khoac-nu']">
+                                    {{'NAVBAR.female.children.menu2' | translate}}</li>
+                                <li nz-submenu nzTitle="{{'NAVBAR.male.children.menu3' | translate}}"
+                                    [routerLink]="['/product', 'quan-nu']">
                                     <ul>
-                                        <li nz-menu-item>Quần đùi</li>
-                                        <li nz-menu-item>Quần dài</li>
+                                        <li nz-menu-item [routerLink]="['/product', 'quan-dui-nu']">
+                                            {{'NAVBAR.female.children.menu4' | translate}}</li>
+                                        <li nz-menu-item [routerLink]="['/product', 'quan-dai-nu']">
+                                            {{'NAVBAR.female.children.menu5' | translate}}</li>
                                     </ul>
                                 </li>
-                                <li nz-menu-item>Giày</li>
-                                <li nz-menu-item>Phụ kiện</li>
+                                <li nz-menu-item [routerLink]="['/product', 'giay-nu']">{{'NAVBAR.female.children.menu6'
+                                    | translate}}</li>
+                                <li nz-menu-item [routerLink]="['/product', 'phu-kien-nu']">
+                                    {{'NAVBAR.female.children.menu7' | translate}}</li>
                             </ul>
                         </nz-dropdown-menu>
                     </li>
                     <li class="pt-1 ">
-                        <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom">
-                            <p>Sản phẩm mới</p>
+                        <a class="nav-link" [routerLink]="['/product', 'san-pham-moi']" rel="tooltip"
+                            title="Sản phẩm mới" data-placement="bottom">
+                            <p>{{'NAVBAR.new' | translate}}</p>
                         </a>
                     </li>
                     <li class="pt-1 ">
-                        <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom">
-                            <p>Khuyến mãi</p>
+                        <a class="nav-link" [routerLink]="['/product', 'khuyen-mai']" rel="tooltip" title="Khuyến mãi"
+                            data-placement="bottom">
+                            <p>{{'NAVBAR.sale' | translate}}</p>
                         </a>
                     </li>
                 </ul>
             </div>
             <ul class="navbar-nav ml-auto flex-row d-flex">
-
-                <li class="nav-item" *ngIf="!isDocumentation()">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom">
-                        <span class="notification">
-                            <img src="../../../assets/svg/shopping-bag.png" height="20px" [routerLink]="['/cart']" />
-                            <span class="badge">{{countCart}}</span>
-                        </span>
-                    </a>
-                </li>
                 <li class="nav-item" *ngIf="!isDocumentation()">
                     <a *ngIf="!user" class="nav-link" rel="tooltip" title="Đăng nhập" data-placement="bottom">
                         <img src="../../../assets/svg/user.png" [routerLink]="['/signup']" height="20px" />
@@ -84,16 +90,27 @@
                         </ul>
                     </nz-dropdown-menu>
                 </li>
+
                 <li class="nav-item" *ngIf="!isDocumentation()">
-                    <a nz-dropdown class="nav-link text-lowercase" rel="tooltip" title="Follow us on Twitter"
+                    <a class="nav-link" rel="tooltip" title="Giỏ hàng" data-placement="bottom">
+                        <span class="notification">
+                            <img src="../../../assets/svg/shopping-bag.png" height="20px" [routerLink]="['/cart']" />
+                            <span class="badge">{{countCart}}</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="!isDocumentation()">
+                    <a nz-dropdown class="nav-link text-lowercase" rel="tooltip" title="Ngôn ngữ"
                         data-placement="bottom" [nzDropdownMenu]="menu3">
-                        <img height="20px"
+                        <img height="20px" *ngIf="translate.currentLang =='vn'"
                             src="https://i.pinimg.com/originals/6a/64/cc/6a64ccd5e65bf699e1294320db23792c.png">
+                        <img height="25px" *ngIf="translate.currentLang =='en'"
+                            src="https://i.pinimg.com/736x/3e/8a/89/3e8a89276ea1747014bd014ffe6dc133.jpg">
                     </a>
                     <nz-dropdown-menu #menu3="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item (click)="logout()">Tiếng Việt</li>
-                            <li nz-menu-item (click)="logout()">English</li>
+                            <li nz-menu-item (click)="translate.use('vn')">Tiếng Việt</li>
+                            <li nz-menu-item (click)="translate.use('en')">English</li>
                         </ul>
                     </nz-dropdown-menu>
                 </li>

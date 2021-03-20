@@ -21,6 +21,9 @@ import { ProductComponent } from './product/product.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { OrdersService } from "./services/orders.service";
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { SigninComponent } from './signin/signin.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -32,7 +35,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzModalModule,
     HttpClientModule,
     NzImageModule, NzStepsModule,
-    NzDividerModule,NzResultModule,NzTabsModule,
+    NzDividerModule, NzResultModule, NzTabsModule, NzSwitchModule,
     NzSelectModule
   ],
   declarations: [
@@ -43,9 +46,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     ManagerComponent,
     PaymentComponent,
     ProductComponent,
+    SigninComponent,
   ],
   providers: [
-    ProductService
+    ProductService, OrdersService
   ]
 })
 export class ExamplesModule { }

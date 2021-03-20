@@ -21,25 +21,10 @@
                     <div class="col-md-4" *ngFor="let product of listData">
                         <div class="card page-carousel">
                             <ngb-carousel>
-                                <ng-template ngbSlide>
-                                    <img src="./assets/img/soroush-karimi.jpg" alt="Random first slide"
-                                        [routerLink]="['/detail', product._id]">
+                                <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
+                                    <img src="http://localhost:8080/{{img}}" [routerLink]="['/detail', product._id]">
                                     <div class="carousel-caption">
                                         <p>Somewhere</p>
-                                    </div>
-                                </ng-template>
-                                <ng-template ngbSlide>
-                                    <img src="./assets/img/federico-beccari.jpg" alt="Random second slide"
-                                        [routerLink]="['/detail']">
-                                    <div class="carousel-caption">
-                                        <p>Somewhere else</p>
-                                    </div>
-                                </ng-template>
-                                <ng-template ngbSlide>
-                                    <img src="./assets/img/joshua-stannard.jpg" alt="Random third slide"
-                                        [routerLink]="['/detail']">
-                                    <div class="carousel-caption">
-                                        <p>Here it is</p>
                                     </div>
                                 </ng-template>
                             </ngb-carousel>

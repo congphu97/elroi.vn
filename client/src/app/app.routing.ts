@@ -13,6 +13,7 @@ import { AuthGuard } from "./shared/guard/guard.component";
 import { ManagerComponent } from "./examples/manager/manager.component";
 import { PaymentComponent } from "./examples/payment/payment.component";
 import { ProductComponent } from "./examples/product/product.component";
+import { SigninComponent } from "./examples/signin/signin.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -25,14 +26,8 @@ const routes: Routes = [
   { path: "product/:id", component: ProductComponent },
   { path: "detail/:id", component: ProductDetailComponent },
   { path: "nucleoicons", component: NucleoiconsComponent },
-  {
-    path: 'login',
-    component: SignupComponent,
-  },
-  {
-    path: 'register',
-    component: SignupComponent,
-  },
+  { path: 'register', component: SigninComponent },
+  { path: 'login', component: SignupComponent },
 ];
 
 @NgModule({

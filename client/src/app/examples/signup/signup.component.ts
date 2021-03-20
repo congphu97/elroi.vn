@@ -9,17 +9,20 @@ import { AuthService } from "app/shared/auth/auth.service";
   styleUrls: ["./signup.component.scss"],
 })
 export class SignupComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
   public formLogin = new FormGroup({
     username: new FormControl("", Validators.required),
     password: new FormControl("", Validators.required),
   });
 
-  login(formLogin: FormGroup) {
+  ngOnInit() { }
+  public login(formLogin: FormGroup) {
     this.authService
       .login(formLogin.value)
       .subscribe((data) => this.router.navigate(["./home"]));
   }
 
-  ngOnInit() {}
+  public register() {
+    this.router.navigate(["./register"])
+  }
 }

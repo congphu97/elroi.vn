@@ -1,3 +1,5 @@
+
+
 <div class="wrapper">
     <div class="page-header" style="background-image: url('./assets/img/login-image.jpg');">
         <div class="filter"></div>
@@ -29,15 +31,11 @@
                               </div>
                               <button class="btn btn-danger btn-block btn-round" (click)="login(formLogin)">Đăng nhập</button>
                           </form>
-                          <div class="forgot">
-                              <a href="#" class="btn btn-link btn-danger">Đăng ký</a>
-                          </div>
+                              <a class="btn btn-link btn-danger" (click)="register()">Đăng ký</a>
                       </div>
                     </div>
                 </div>
-                <div class="footer register-footer text-center">
-                    <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
-                </div>
+            
             </div>
     </div>
 </div>

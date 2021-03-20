@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { forkJoin, from } from 'rxjs';
-import { flatMap, map, switchMap, tap } from 'rxjs/operators';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'app/shared/auth/auth.service';
+import { IOrder, IUser } from 'app/shared/interfaces/ui.interfaces';
+import { combineLatest, concat, forkJoin, from, merge, of } from 'rxjs';
+import { flatMap, map, reduce, switchMap, tap } from 'rxjs/operators';
+import { OrdersService } from '../services/orders.service';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -12,81 +15,91 @@ import { ProductService } from '../services/product.service';
 
 export class LandingComponent implements OnInit {
   count: number = 0
-  constructor(private productService: ProductService) { }
-  private validateForm: FormGroup
+  constructor(private authService: AuthService, private productService: ProductService, private OrdersService: OrdersService) { }
+  private listData$ = (id) => this.productService.getOneProduct(id)
   ngOnInit() {
     this.configCart()
-
+    this.getUser()
   }
-  listOfData: any[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
-
+  public listOfData = []
+  public listCart
+  public user: IUser
+  public orderForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    phone: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required)
+  }
+  )
   configCart() {
-    const listCart = JSON.parse(localStorage.getItem("cart"));
-    listCart.map((item) => this.count += item.number)
-    from(listCart).pipe(
-      switchMap((item: any) => this.productService.getOneProduct(item._id)),
-      map((data) =>   (data)),
-      tap((data) => console.log({ data }))
-
+    this.listCart = JSON.parse(localStorage.getItem("cart"));
+    if (!this.listCart) return;
+    this.listCart.map((item) => this.count += item.number)
+    from(this.listCart).pipe(
+      flatMap((item: any) => forkJoin(this.listData$(item._id), of(item.number))),
+      tap((data) => this.listOfData.push({
+        product: data[0], number: data[1]
+      })
+      )
     ).subscribe()
-    console.log({ listCart }, this.count, this.listOfData)
   }
 
-  // item.map((pro:any) => forkJoin(this.productService.getOneProduct(pro._id)))
   current = 0;
+  private getUser() {
+    console.log(this.authService.getAuthenticated())
+    const user = this.authService.getAuthenticated()
+    if (!user) return;
+    this.authService.getUser({ username: user.username }).
+      pipe(tap((user: IUser[]) => this.user = user[0]),
+        tap((user: IUser[]) => this.setFormValue(user[0]))).
+      subscribe()
+  }
 
-  index = 'First-content';
 
+  private setFormValue(value: IUser) {
+    Object.keys(this.orderForm.controls).map((key) =>
+      this.orderForm.controls[key].setValue(value[key])
+    )
+  }
+
+  public checkDisable(key: string) {
+    console.log(this.user[key] ? true : false)
+    return this.user[key] ? true : false
+  }
   pre(): void {
     this.current -= 1;
-    this.changeContent();
   }
 
   next(): void {
     this.current += 1;
-    this.changeContent();
   }
 
   done(): void {
     console.log('done');
   }
 
-  changeContent(): void {
-    switch (this.current) {
-      case 0: {
-        this.index = 'First-content';
-        break;
-      }
-      case 1: {
-        this.index = 'Second-content';
-        break;
-      }
-      case 2: {
-        this.index = 'third-content';
-        break;
-      }
-      default: {
-        this.index = 'error';
-      }
-    }
+  complete() {
+    let totalPrice = 0;
+    this.current += 1;
+    this.listOfData.map((item) => totalPrice += item.product.price);
+    const idProduct = this.listOfData.map((item) => ({
+      id: item.product._id,
+      number: item.number
+    }));
+    this.orderForm.value.idProduct = idProduct;
+    this.orderForm.value.totalPrice = totalPrice;
+    this.orderForm.value.status = false
+    this.orderForm.value.createdAt = Date.now()
+    const formData = Object.assign({}, this.orderForm.value)
+    this.OrdersService.createOrder(formData).pipe(
+      tap((order: IOrder) => {
+        localStorage.removeItem('cart');
+        this.authService.setSubmit();
+      })
+    ).subscribe()
+    console.log({ formData })
   }
+
+
+
 }

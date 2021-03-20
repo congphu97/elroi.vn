@@ -10,3 +10,42 @@
 
         </h6>
     </div>
+    <div class="main">
+        <div class="section" *ngIf="productList?.length > 0">
+            <div class="container text-center">
+                <h3>Sản phẩm mới</h3>
+            </div>
+            <div class="m-5">
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let product of productList">
+                        <div class="card page-carousel">
+                            <ngb-carousel>
+                                <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
+                                    <img nz-image nzSrc="http://localhost:8080/{{img}}" alt="Random first slide"
+                                        [routerLink]="['/detail', product._id]">
+                                    <div class="carousel-caption">
+                                        <p>Somewhere</p>
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                            <div class="text-center w-100 p-2">
+                                <h6 class="font-weight-bold">{{product.productName}} </h6>
+                                <p *ngIf="!product.priceSale" class="font-weight-bold">{{product.price | currency :
+                                    "VND":true}}</p>
+                                <p *ngIf="product.priceSale"> <span class=" font-weight-bold text-danger">{{
+                                        calculatorSale(product) | currency : "VND":true}}</span>
+                                    <s class="m-0 pl-2">{{product.price | currency : "VND":true}} </s>
+                                    <span class="font-weight-bold text-danger">(-{{product.priceSale}} %)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section text-center" *ngIf="productList?.length < 1">
+            <h5>Hiện tại sản phẩm đang được cập nhật. Vui lòng thử lại sau.</h5>
+        </div>
+
+    </div>
+</div>

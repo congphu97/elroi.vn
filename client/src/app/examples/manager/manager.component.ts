@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { IProduct } from 'app/shared/interfaces/ui.interfaces';
-import { switchMap, tap } from 'rxjs/operators';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { IOrder, IProduct } from 'app/shared/interfaces/ui.interfaces';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { OrdersService } from '../services/orders.service';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./manager.component.scss']
 })
 export class ManagerComponent implements OnInit {
+  urls = new Array<string>();
   public formProduct = new FormGroup({
     productName: new FormControl(''),
     category: new FormControl(''),
@@ -18,15 +20,18 @@ export class ManagerComponent implements OnInit {
     note: new FormControl(''),
     status: new FormControl(''),
     size: new FormControl(''),
-    imgProduct: new FormArray([])
+    imgProduct: new FormControl('')
   })
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private ordersService: OrdersService, private formBuilder: FormBuilder) { }
   public productTable: IProduct[] = []
+  public orderTable: IOrder[] = []
   ngOnInit(): void {
     this.getAllProduct()
+    this.getAllOrder()
     this.listenSubmit()
 
   }
+  @ViewChild('UploadFileInput', { static: false }) uploadFileInput: ElementRef;
   public isVisibleMiddle = false;
   public isVisibleDelete = false;
   public product: IProduct
@@ -41,6 +46,7 @@ export class ManagerComponent implements OnInit {
   checkSale($event) {
     console.log({ $event })
   }
+
   public openModalUpdate(data: IProduct) {
     this.product = data
     this.titleModal = `Chỉnh sửa thông tin sản phẩm ${data.productName}`
@@ -76,15 +82,41 @@ export class ManagerComponent implements OnInit {
     ).subscribe()
   }
   private createProduct() {
+    console.log(this.formProduct.value)
     let { createdAt, updatedAt } = this.formProduct.value
-    createdAt = updatedAt = Date.now()
-    this.productService.createProduct(this.formProduct.value).subscribe((product: IProduct) => this.productService.setSubmit(product))
+    const formData: any = new FormData();
+    const files: Array<File> = this.filesToUpload;
+    for (let i = 0; i < files.length; i++) {
+      formData.append("uploads[]", files[i], files[i]['name']);
+    }
+    createdAt = updatedAt = Date.now();
+    this.productService.createProduct(this.formProduct.value).subscribe((product: IProduct) => {
+      this.productService.setSubmit(product)
+    })
+    this.productService.uploadFile(formData).subscribe(response => {
+      console.log(response);
+    })
     this.handleCancelMiddle()
   }
 
   public updateProduct(product: IProduct) {
+    const formData: any = new FormData();
+    const files: Array<File> = this.filesToUpload;
+    for (let i = 0; i < files.length; i++) {
+      formData.append("uploads[]", files[i], files[i]['name']);
+    }
     this.formProduct.value.updatedAt = Date.now()
-    this.productService.updateProduct(product._id, this.formProduct.value).subscribe((product: IProduct) => this.productService.setSubmit(product))
+    console.log({formData,files})
+    this.productService.uploadFile(formData).pipe(
+      switchMap((response: any[]) => {
+        
+        this.formProduct.value.imgProduct = response.map((file) => file.filename)
+        console.log(this.formProduct.value, response)
+        return this.productService.updateProduct(product._id, this.formProduct.value)
+      }),
+      tap((product) => this.productService.setSubmit(product))
+    ).subscribe()
+
     this.handleCancelMiddle()
 
   }
@@ -92,5 +124,33 @@ export class ManagerComponent implements OnInit {
   public deleteProduct(id: string) {
     this.productService.deleteProduct(id).subscribe((product: IProduct) => this.productService.setSubmit(product))
     this.isVisibleDelete = false
+  }
+
+  public getAllOrder() {
+    this.ordersService.getAllOrder().pipe(tap((data: IOrder[]) =>
+      this.orderTable = data
+    )).subscribe()
+  }
+
+  public changeStatus(order: IOrder) {
+    console.log({ order })
+    this.ordersService.updateOrder(order._id, order).subscribe()
+  }
+
+
+  private filesToUpload: Array<File> = [];
+
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+    if (this.filesToUpload) {
+      for (let file of this.filesToUpload) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.urls.push(e.target.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
   }
 }

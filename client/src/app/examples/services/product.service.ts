@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductService {
-  private baseUrl = 'http://localhost:3000/'
+  private baseUrl = 'http://localhost:8080/'
   private product = new Subject()
   constructor(private http: HttpClient) { }
   public createProduct(product: IProduct) {
@@ -36,5 +36,14 @@ export class ProductService {
 
   public getSubmit$$() {
     return this.product.asObservable()
+  }
+
+  public uploadFile(image: any) {
+    return this.http.post(this.baseUrl + 'upload', image)
+  }
+
+  public getProductQuery(key: string, value: string) {
+    return this.http.get(this.baseUrl + "product?" + key + '=' + value)
+
   }
 }

@@ -1,0 +1,30 @@
+{
+    "NAVBAR": {
+        "male": {
+            "title": "Nam",
+            "children": {
+                "menu1": "Áo",
+                "menu2": "Áo khoác nam",
+                "menu3": "Quần",
+                "menu4": "Quần đùi",
+                "menu5": "Quần dài",
+                "menu6": "Giày",
+                "menu7": "Phụ kiện"
+            }
+        },
+        "female": {
+            "title": "Nữ",
+            "children": {
+                "menu1": "Áo",
+                "menu2": "Áo khoác nữ",
+                "menu3": "Quần",
+                "menu4": "Quần đùi",
+                "menu5": "Quần dài",
+                "menu6": "Giày",
+                "menu7": "Phụ kiện"
+            }
+        },
+        "new":"NEW",
+        "sale":"SALE OFF"
+    }
+}
