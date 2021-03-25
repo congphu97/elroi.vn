@@ -26,7 +26,7 @@
                 <tbody>
                     <tr *ngFor="let order of orderTable;let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ order.createdAt }}</td>
+                        <td>{{ order.createdAt | date:'dd/MM/yyyy hh:mm:ss' }}</td>
                         <td>{{ order.customerName }}</td>
                         <td>{{ order.numberPhone }}</td>
                         <td>{{ order.email }}</td>
@@ -68,7 +68,7 @@
                         <td>{{ i + 1 }}</td>
                         <td>
                             <span *ngFor="let img of product.imgProduct">
-                                <img src="http://localhost:8080/{{img}}" height=30px width="30px"/>
+                                <img src="http://localhost:8080/{{img}}" height=30px width="30px" />
                             </span>
                         </td>
                         <td>{{ product.productName }}</td>
@@ -144,10 +144,6 @@
             <label class="col-3 p-2">Kích cỡ</label>
             <input type="text" class="form-control" formControlName='size' />
         </div>
-        <!-- <div class="d-flex">
-            <label class="col-3 p-2">Đường dẫn hình ảnh</label>
-            <input type="file" (change)="fileChoose($event)" #UploadFileInput>
-        </div> -->
     </form>
     <label class="col-3 p-2">Hình ảnh</label>
     <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload a file..." multiple />
@@ -158,4 +154,9 @@
 <nz-modal [(nzVisible)]="isVisibleDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
     (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteProduct(product._id)">
     Bạn chắc chắn muốn Xóa <strong>{{product?.productName}}</strong>?
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
+    (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteProduct(product._id)">
+    Bạn chắc chắn muốn Xóa đơn hàng này ? <strong>{{order?.o}}</strong>?
 </nz-modal>

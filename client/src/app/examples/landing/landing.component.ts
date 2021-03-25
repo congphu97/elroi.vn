@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'app/shared/auth/auth.service';
-import { IOrder, IUser } from 'app/shared/interfaces/ui.interfaces';
+import { IOrder, IProduct, IUser } from 'app/shared/interfaces/ui.interfaces';
 import { combineLatest, concat, forkJoin, from, merge, of } from 'rxjs';
 import { flatMap, map, reduce, switchMap, tap } from 'rxjs/operators';
 import { OrdersService } from '../services/orders.service';
@@ -27,7 +27,7 @@ export class LandingComponent implements OnInit {
   public orderForm = new FormGroup({
     username: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
-    phone: new FormControl('', Validators.required),
+    numberphone: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required)
   }
   )
@@ -81,25 +81,27 @@ export class LandingComponent implements OnInit {
   complete() {
     let totalPrice = 0;
     this.current += 1;
-    this.listOfData.map((item) => totalPrice += item.product.price);
+    this.listOfData.map((item) => totalPrice += this.calculatorSale(item.product));
     const idProduct = this.listOfData.map((item) => ({
       id: item.product._id,
       number: item.number
     }));
     this.orderForm.value.idProduct = idProduct;
     this.orderForm.value.totalPrice = totalPrice;
-    this.orderForm.value.status = false
+    this.orderForm.value.status = false;
+    this.orderForm.value.customerName = this.user.name
     this.orderForm.value.createdAt = Date.now()
     const formData = Object.assign({}, this.orderForm.value)
-    this.OrdersService.createOrder(formData).pipe(
+    this.OrdersService.createOrder(formData, this.user.username).pipe(
       tap((order: IOrder) => {
         localStorage.removeItem('cart');
         this.authService.setSubmit();
       })
     ).subscribe()
-    console.log({ formData })
   }
 
-
+  public calculatorSale(product: IProduct) {
+    return product.price * (100 - product.priceSale) / 100;
+  }
 
 }

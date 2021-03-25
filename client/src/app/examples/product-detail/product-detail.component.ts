@@ -40,7 +40,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   changeSelect(value: number): void {
-    this.priceTotal = this.product.price * value
+    this.priceTotal = this.calculatorSale(this.product) * value
     this.selectedDefault = value
+  }
+
+  public calculatorSale(product: IProduct) {
+    return product.price * (100 - product.priceSale) / 100;
   }
 }

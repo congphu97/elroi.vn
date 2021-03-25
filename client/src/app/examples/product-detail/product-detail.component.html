@@ -25,7 +25,14 @@
                             <nz-option *ngFor="let p of arrayNumber" [nzValue]="p" [nzLabel]="p"></nz-option>
                         </nz-select>
                         <nz-divider class="m-1"></nz-divider>
-                        <h5 class="font-weight-bold"> {{ priceTotal | currency : "VND":true}}</h5>
+                        <!-- <h5 class="font-weight-bold"> {{ priceTotal | currency : "VND":true}}</h5> -->
+                        <p *ngIf="!product.priceSale" class="font-weight-bold">{{product.price | currency :
+                            "VND":true}}</p>
+                        <p *ngIf="product.priceSale"> <span class=" font-weight-bold text-danger">{{
+                            priceTotal | currency : "VND":true}}</span>
+                            <s class="m-0 pl-2">{{product.price | currency : "VND":true}} </s>
+                            <span class="font-weight-bold text-danger">(-{{product.priceSale}} %)</span>
+                        </p>
                         <div *ngIf="product.status == 'Hết hàng'">
                             <button type="button" disabled="true" class="w-100 btn btn-default">Hết hàng</button>
                         </div>

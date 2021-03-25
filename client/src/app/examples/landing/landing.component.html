@@ -17,7 +17,8 @@
                                     Tổng số đơn hàng: {{count}}
                                 </h5>
                                 <br>
-                                <nz-table #basicTable [nzData]="listCart" [nzFrontPagination]="false" [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
+                                <nz-table #basicTable [nzData]="listCart" [nzFrontPagination]="false"
+                                    [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
                                     [nzShowPagination]="false">
                                     <thead>
                                         <tr>
@@ -30,12 +31,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let data of listOfData;let i = index">
+                                        <tr *ngFor="let data of listOfData;let i = index;">
                                             <td>{{ i +1 }}</td>
                                             <td>{{ data.product.productName }}</td>
                                             <td>{{ data.number }}</td>
-                                            <td>{{ data.product.size }}</td>
-                                            <td>{{ data.product.price }}</td>
+                                            <td> {{data.product.size}} </td>
+                                            <td>
+                                                <p *ngIf="!data.product.priceSale" class="font-weight-bold">
+                                                    {{data.product.price |
+                                                    currency :
+                                                    "VND":true}}</p>
+                                                <p *ngIf="data.product.priceSale"> <span
+                                                        class=" font-weight-bold text-danger">{{
+                                                        calculatorSale(data.product) | currency : "VND":true}}</span>
+                                                    <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}}
+                                                    </s>
+                                                    <span
+                                                        class="font-weight-bold text-danger">(-{{data.product.priceSale}}
+                                                        %)</span>
+                                                </p>
+                                            </td>
                                             <td>
                                                 <button>Hủy bỏ</button>
                                             </td>
@@ -51,19 +66,20 @@
                             <h6>Thông tin giao hàng:</h6>
                             <div class="d-flex  m-1">
                                 <label class="col-3">Họ và tên</label>
-                                <input class="form-control" formControlName="username" [attr.disabled]="checkDisable('username')">
+                                <input class="form-control" formControlName="username"
+                                    [attr.disabled]="checkDisable('username')">
                             </div>
                             <div class="d-flex  m-1">
                                 <label class="col-3">Email</label>
-                                <input class="form-control"  formControlName="email" >
+                                <input class="form-control" formControlName="email">
                             </div>
                             <div class="d-flex  m-1">
                                 <label class="col-3">Số điện thoại</label>
-                                <input class="form-control"  formControlName="phone">
+                                <input class="form-control" formControlName="numberphone">
                             </div>
                             <div class="d-flex m-1">
                                 <label class="col-3">Địa chỉ giao hàng</label>
-                                <input class="form-control"  formControlName="address">
+                                <input class="form-control" formControlName="address">
                             </div>
                             <div>
                                 Lưu ý:
@@ -111,7 +127,7 @@
                     <button class="btn" nzType="default" (click)="done()">
                         Tiếp tục mua sắm
                     </button>
-            
+
                 </div>
             </div>
         </div>

@@ -185,7 +185,8 @@ app.get('/product/:id', function (req, res) {
 
 
 app.post("/product", function (req, res) {
-  var product = new Product(req.body)
+  var product = new Product(req.body.order)
+
   product.save(function (err) {
     if (err) {
       res.json({ kq: 0, ErrMesg: err });
@@ -215,6 +216,7 @@ app.delete("/product/:id", function (req, res) {
 
 // Order
 app.get('/order', function (req, res) {
+
   Order.find(function (err, data) {
     if (err) {
       return res.json({ kq: 0, ErrMesg: err });
@@ -234,11 +236,16 @@ app.get('/order/:id', function (req, res) {
 
 
 app.post("/order", function (req, res) {
-  var order = new Order(req.body)
-  order.save(function (err) {
-    if (err) {
-      res.json({ kq: 0, ErrMesg: err });
-    } else res.json(req.body);
+  var order = new Order(req.body.order)
+  order.save(function (err, value) {
+    if (!err) {
+      User.findOne({ username: req.body.username }, (err, data) => {
+        console.log({ value, data })
+        data.history.push(value._id);
+        data.save()
+      })
+      return res.json(req.body);
+    } else res.json({ kq: 0, ErrMesg: err });
   });
 });
 

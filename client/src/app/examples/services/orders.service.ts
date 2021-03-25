@@ -10,8 +10,11 @@ export class OrdersService {
     private baseUrl = 'http://localhost:8080/'
     private order = new Subject()
     constructor(private http: HttpClient) { }
-    public createOrder(order: IOrder) {
-        return this.http.post(this.baseUrl + "order", order)
+    public createOrder(order: IOrder, username: string) {
+        return this.http.post(this.baseUrl + "order", {
+            order: order,
+            username: username
+        })
     }
 
     public updateOrder(id: string, order: IOrder) {

@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  private calculatorSale(product: IProduct) {
+  public calculatorSale(product: IProduct) {
     return product.price * (100 - product.priceSale) / 100;
   }
 }

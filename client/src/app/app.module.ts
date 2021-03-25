@@ -22,9 +22,10 @@ import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { ProductComponent } from "./examples/product/product.component";
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent],
+  declarations: [AppComponent, NavbarComponent, FooterComponent,ProductComponent],
   imports: [
     BrowserModule,
     NgbModule,

@@ -17,7 +17,6 @@ import { PaymentComponent } from './payment/payment.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
-import { ProductComponent } from './product/product.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -45,7 +44,6 @@ import { SigninComponent } from './signin/signin.component';
     ProductDetailComponent,
     ManagerComponent,
     PaymentComponent,
-    ProductComponent,
     SigninComponent,
   ],
   providers: [
