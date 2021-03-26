@@ -58,13 +58,13 @@
                         </nz-dropdown-menu>
                     </li>
                     <li class="pt-1 ">
-                        <a class="nav-link" [routerLink]="['/product', 'san-pham-moi']" rel="tooltip"
+                        <a class="nav-link" [routerLink]="['/product', 'new']" rel="tooltip"
                             title="Sản phẩm mới" data-placement="bottom">
                             <p>{{'NAVBAR.new' | translate}}</p>
                         </a>
                     </li>
                     <li class="pt-1 ">
-                        <a class="nav-link" [routerLink]="['/product', 'khuyen-mai']" rel="tooltip" title="Khuyến mãi"
+                        <a class="nav-link" [routerLink]="['/product', 'sale']" rel="tooltip" title="Khuyến mãi"
                             data-placement="bottom">
                             <p>{{'NAVBAR.sale' | translate}}</p>
                         </a>
@@ -84,7 +84,7 @@
 
                     <nz-dropdown-menu #menu4="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item [routerLink]="['/admin']">Quản lý</li>
+                            <li nz-menu-item *ngIf="user?.role == 'admin'" [routerLink]="['/admin']">Quản lý</li>
                             <li nz-menu-item [routerLink]="['/profile']">Hồ sơ</li>
                             <li nz-menu-item (click)="logout()">Đăng xuất</li>
                         </ul>
@@ -123,8 +123,46 @@
                 <span class="navbar-toggler-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse" id="navbarToggler">
-
+        <div class="navbar-collapse p-0" id="navbarToggler">
+            <ul nz-menu nzMode="inline" style="width: 240px;" class=" d-lg-none" [nzTheme]=" 'light'">
+                <li nz-menu-item >
+                    <span>Trang chủ</span>
+                  </li>
+                <li nz-submenu nzTitle="Nam">
+                  <ul>
+                    <li nz-menu-item>Áo</li>
+                    <li nz-menu-item>Áo khoác nam</li>
+                    <li nz-submenu nzTitle="Quần">
+                      <ul>
+                        <li nz-menu-item>Quần đùi</li>
+                        <li nz-menu-item>Quần dài</li>
+                      </ul>
+                    </li>
+                    <li nz-menu-item>Giày</li>
+                    <li nz-menu-item>Phụ kiện</li>
+                  </ul>
+                </li>
+                <li nz-submenu nzTitle="Nữ">
+                    <ul>
+                        <li nz-menu-item>Áo</li>
+                        <li nz-menu-item>Áo khoác nữ</li>
+                        <li nz-submenu nzTitle="Quần">
+                          <ul>
+                            <li nz-menu-item>Quần đùi</li>
+                            <li nz-menu-item>Quần dài</li>
+                          </ul>
+                        </li>
+                      <li nz-menu-item>Giày</li>
+                      <li nz-menu-item>Phụ kiện</li>
+                    </ul>
+                  </li>
+                  <li nz-menu-item >
+                    <span>Sản phẩm mới</span>
+                  </li>
+                  <li nz-menu-item >
+                    <span>Khuyến mãi</span>
+                  </li>
+              </ul>
         </div>
     </div>
 </nav>

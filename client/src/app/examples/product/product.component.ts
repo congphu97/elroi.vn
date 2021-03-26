@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IProduct } from 'app/shared/interfaces/ui.interfaces';
 import { tap } from 'rxjs/operators';
-import { ActionSequence } from 'selenium-webdriver';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -24,18 +23,18 @@ export class ProductComponent implements OnInit {
     this.productService.getProductQuery(key, value).pipe(
       tap((data: IProduct[]) => {
         this.productList = data
-        console.log({ data })
+        console.log({ data }) 
       })
     ).subscribe()
 
   }
   private checkParamBeforQuery(type: string) {
     switch (type) {
-      case 'san-pham-moi':
-        this.getProductQuery('category', type)
+      case 'sale':
+        this.getProductQuery('status', type)
         break
 
-      case 'khuyen-mai':
+      case 'new':
         this.getProductQuery('category', type)
         break
 

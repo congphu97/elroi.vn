@@ -8,21 +8,22 @@ import { ProfileComponent } from "./profile/profile.component";
 import { SignupComponent } from "./signup/signup.component";
 import { ProductDetailComponent } from "./product-detail/product-detail.component";
 import { CookieModule } from "ngx-cookie";
-import { ManagerComponent } from './manager/manager.component';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ManagerComponent } from "./manager/manager.component";
+import { NzTableModule } from "ng-zorro-antd/table";
+import { NzModalModule } from "ng-zorro-antd/modal";
 import { ProductService } from "./services/product.service";
 import { HttpClientModule } from "@angular/common/http";
-import { PaymentComponent } from './payment/payment.component';
-import { NzImageModule } from 'ng-zorro-antd/image';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
-import { NzResultModule } from 'ng-zorro-antd/result';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { PaymentComponent } from "./payment/payment.component";
+import { NzImageModule } from "ng-zorro-antd/image";
+import { NzDividerModule } from "ng-zorro-antd/divider";
+import { NzStepsModule } from "ng-zorro-antd/steps";
+import { NzResultModule } from "ng-zorro-antd/result";
+import { NzTabsModule } from "ng-zorro-antd/tabs";
+import { NzSelectModule } from "ng-zorro-antd/select";
 import { OrdersService } from "./services/orders.service";
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { SigninComponent } from './signin/signin.component';
+import { NzSwitchModule } from "ng-zorro-antd/switch";
+import { SigninComponent } from "./signin/signin.component";
+import { NzMenuModule } from "ng-zorro-antd/menu";
 @NgModule({
   imports: [
     CommonModule,
@@ -33,9 +34,14 @@ import { SigninComponent } from './signin/signin.component';
     NzTableModule,
     NzModalModule,
     HttpClientModule,
-    NzImageModule, NzStepsModule,
-    NzDividerModule, NzResultModule, NzTabsModule, NzSwitchModule,
-    NzSelectModule
+    NzImageModule,
+    NzStepsModule,
+    NzDividerModule,
+    NzResultModule,
+    NzTabsModule,
+    NzSwitchModule,
+    NzMenuModule,
+    NzSelectModule,
   ],
   declarations: [
     LandingComponent,
@@ -46,8 +52,6 @@ import { SigninComponent } from './signin/signin.component';
     PaymentComponent,
     SigninComponent,
   ],
-  providers: [
-    ProductService, OrdersService
-  ]
+  providers: [ProductService, OrdersService],
 })
-export class ExamplesModule { }
+export class ExamplesModule {}

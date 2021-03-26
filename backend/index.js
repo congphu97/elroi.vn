@@ -82,13 +82,6 @@ app.post('/getUser', function (req, res) {
   })
 })
 
-app.post('/updateHistory', function (req, res) {
-  User.find(req.body, function (err, data) {
-    if (err) {
-      return res.json({ kq: 0, ErrMesg: err });
-    } else return res.json(data)
-  })
-})
 
 app.post("/login", function (req, res) {
   const user = req.body;
@@ -99,7 +92,13 @@ app.post("/login", function (req, res) {
   query.findOne(function (err, data) {
     if (err) return res.json({});
     if (data) {
-      var token = jwt.sign(user, serect, { expiresIn: '24h' }); // Ton tai trong 1 h. Sau 1h server se xoa token
+      const respone = {
+        username:data.username,
+        password:data.password,
+        role:data.role,
+      }
+      console.log({respone})
+      var token = jwt.sign(respone, serect, { expiresIn: '24h' }); // Ton tai trong 1 h. Sau 1h server se xoa token
       res.cookie("token", token, { httpOnly: true });
       return res.json(token);
     }

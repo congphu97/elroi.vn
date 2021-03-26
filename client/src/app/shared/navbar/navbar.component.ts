@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
     public countCart: number = 0
     private sidebarVisible: boolean;
     public user;
-    constructor(public location: Location, private element: ElementRef, private authService: AuthService, private translate: TranslateService) {
+    constructor(public location: Location,private router:Router,private route:ActivatedRoute ,private element: ElementRef, private authService: AuthService, private translate: TranslateService) {
         this.sidebarVisible = false;
         this.authService.setSubmit()
     }
@@ -80,5 +80,7 @@ export class NavbarComponent implements OnInit {
    
     logout() {
         this.authService.logout()
+        this.router.navigate(['signup'], { relativeTo: this.route });
+
     }
 }

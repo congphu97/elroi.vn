@@ -24,49 +24,40 @@
                                 <div class="row following" id="follows">
                                     <div class="col-md-6 ml-auto mr-auto">
                                         <ul class="list-unstyled follows">
-                                            <li *ngFor="let order of historyList">
-                                                <div class="row">
-                                                    <div class="col-md-2 col-sm-2 ml-auto mr-auto">
-                                                        <img src="./assets/img/faces/clem-onojeghuo-2.jpg"
-                                                            alt="Circle Image"
-                                                            class="img-circle img-no-padding img-responsive">
+                                            <li >
+                                                <div class="d-flex border-bottom">
+                                                    <div class="col-4 m-auto">
+                                                        <h6> STT</h6>
                                                     </div>
-                                                    <div class="col-md-7 col-sm-4 ml-auto">
-                                                        <h6>Flume<br /><small>Musical Producer</small></h6>
+                                                    <div class="col-4 m-auto">
+                                                        <h6> Đơn hàng</h6>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-2 ml-auto mr-auto">
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input class="form-check-input" type="checkbox" value=""
-                                                                    checked="">
-                                                                <span class="form-check-sign"></span>
-                                                            </label>
+                                                    <div class="col-4 m-auto">
+                                                        <h6> Tổng tiền</h6>
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngIf="historyList?.length >0" >
+                                                    <div class="d-flex  py-2" *ngFor="let orderHistory of historyList;let i = index">
+                                                        <div class="col-4 m-auto">
+                                                            {{i+1}}
+                                                        </div>
+                                                        <div class="col-4 m-auto">
+                                                                <p class="p-0 m-auto" *ngFor="let order of orderHistory.idProduct">
+                                                                    {{getProduct(order.id).productName}}
+                                                                </p>
+                                                        </div>
+                                                        <div class="col-4 m-auto">
+                                                            <p>
+                                                                {{orderHistory.totalPrice | currency : "VND":true}}
+                                                            </p>
                                                         </div>
                                                     </div>
+                                                </ng-container>
+                                                <div *ngIf="historyList?.length < 1">
+                                                    <h6>Bạn chưa có đơn hàng nào.</h6>
                                                 </div>
                                             </li>
                                             <hr />
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-md-2 col-sm-2 ml-auto mr-auto">
-                                                        <img src="./assets/img/faces/ayo-ogunseinde-2.jpg"
-                                                            alt="Circle Image"
-                                                            class="img-circle img-no-padding img-responsive">
-                                                    </div>
-                                                    <div class="col-md-7 col-sm-4 ml-auto">
-                                                        <h6>Banks<br /><small>Singer</small></h6>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-2 ml-auto mr-auto">
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input class="form-check-input" type="checkbox" value=""
-                                                                    checked="">
-                                                                <span class="form-check-sign"></span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>

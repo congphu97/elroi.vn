@@ -8,8 +8,7 @@
                         <h3 class="title">Đăng ký</h3>
                         <form [formGroup]="formLogin" class="register-form">
                             <label>Tên tài khoản</label>
-                            <div class="input-group form-group-no-border"
-                                [ngClass]="{'input-group-focus':focus===true}">
+                            <div class="input-group form-group-no-border">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-single-02"></i>
@@ -21,8 +20,7 @@
                             </div>
 
                             <label>Mật khẩu</label>
-                            <div class="input-group form-group-no-border"
-                                [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group form-group-no-border">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-key-25"></i>
@@ -33,8 +31,7 @@
                             </div>
 
                             <label>Họ và tên</label>
-                            <div class="input-group form-group-no-border"
-                                [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group form-group-no-border">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-notes"></i>
@@ -45,8 +42,8 @@
                             </div>
 
                             <label>Email</label>
-                            <div class="input-group form-group-no-border"
-                                [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group form-group-no-border">
+
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-email-85"></i>
@@ -56,8 +53,8 @@
                                     formControlName="email" (focus)="focus1=true" (blur)="focus1=false" autocomplete="false">
                             </div>
                             <label>Ngày sinh</label>
-                            <div class="input-group form-group-no-border"
-                                [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group form-group-no-border">
+
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-key-25"></i>
@@ -68,8 +65,7 @@
                             </div>
 
                             <label>Số điện thoại</label>
-                            <div class="input-group form-group-no-border"
-                                [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group form-group-no-border">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-key-25"></i>
@@ -83,9 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer register-footer text-center">
-                <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
-            </div>
+          
         </div>
     </div>
 </div>
