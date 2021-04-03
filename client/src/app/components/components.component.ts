@@ -13,6 +13,7 @@ import { tap } from 'rxjs/operators';
 
 export class ComponentsComponent implements OnInit {
     model: NgbDateStruct;
+    array = [1, 2, 3, 4];
     constructor(private renderer: Renderer2, private authService: AuthService, private productService: ProductService) { }
     public listData: IProduct[] = []
 

@@ -28,7 +28,7 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ProductComponent } from "./examples/product/product.component";
 import { NzMenuModule } from "ng-zorro-antd/menu";
-
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +51,7 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
     CookieModule.forRoot(),
     NzIconModule,
     NzDropDownModule,
+    NzCarouselModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -72,7 +73,7 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);

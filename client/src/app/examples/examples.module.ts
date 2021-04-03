@@ -24,6 +24,7 @@ import { OrdersService } from "./services/orders.service";
 import { NzSwitchModule } from "ng-zorro-antd/switch";
 import { SigninComponent } from "./signin/signin.component";
 import { NzMenuModule } from "ng-zorro-antd/menu";
+import { NzButtonModule } from "ng-zorro-antd/button";
 @NgModule({
   imports: [
     CommonModule,
@@ -42,6 +43,8 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
     NzSwitchModule,
     NzMenuModule,
     NzSelectModule,
+    NzButtonModule,
+
   ],
   declarations: [
     LandingComponent,
@@ -54,4 +57,4 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
   ],
   providers: [ProductService, OrdersService],
 })
-export class ExamplesModule {}
+export class ExamplesModule { }

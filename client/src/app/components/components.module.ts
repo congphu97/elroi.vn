@@ -14,6 +14,7 @@ import { ComponentsComponent } from './components.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NgbdModalComponent } from './modal/modal.component';
 import { NgbdModalContent } from './modal/modal.component';
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 
 @NgModule({
     imports: [
@@ -22,7 +23,7 @@ import { NgbdModalContent } from './modal/modal.component';
         NgbModule,
         NouisliderModule,
         RouterModule,
-        JwBootstrapSwitchNg2Module
+        JwBootstrapSwitchNg2Module, NzCarouselModule
     ],
     declarations: [
         ComponentsComponent,
@@ -35,6 +36,6 @@ import { NgbdModalContent } from './modal/modal.component';
         NgbdModalContent
     ],
     entryComponents: [NgbdModalContent],
-    exports:[ ComponentsComponent ]
+    exports: [ComponentsComponent]
 })
 export class ComponentsModule { }
