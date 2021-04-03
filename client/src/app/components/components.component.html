@@ -18,9 +18,10 @@
                         <div class="card page-carousel">
                             <ngb-carousel>
                                 <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
-                                    <img src="appConfig.api{{img}}" [routerLink]="['/detail', product._id]">
+                                    <img src="{{getBaseImg(img)}}" [routerLink]="['/detail', product._id]">
                                     <div class="carousel-caption">
                                         <p>{{product.productName}}</p>
+                                        {{img}}
                                     </div>
                                 </ng-template>
                             </ngb-carousel>

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { AppConfigService } from "app/appConfig.service";
 import { IOrder, IProduct } from "app/shared/interfaces/ui.interfaces";
 import { flatMap, map, switchMap, tap } from "rxjs/operators";
 import { OrdersService } from "../services/orders.service";
@@ -12,6 +13,7 @@ import { ProductService } from "../services/product.service";
 })
 export class ManagerComponent implements OnInit {
   urls = new Array<string>();
+  public apiImg = this.appConfig.config.api;
   public formProduct = new FormGroup({
     productName: new FormControl(""),
     category: new FormControl(""),
@@ -24,8 +26,10 @@ export class ManagerComponent implements OnInit {
   });
   constructor(
     private productService: ProductService,
-    private ordersService: OrdersService
-  ) {}
+    private ordersService: OrdersService,
+    private appConfig: AppConfigService
+
+  ) { }
   public productTable: IProduct[] = [];
   public orderTable: IOrder[] = [];
   ngOnInit(): void {
@@ -117,17 +121,17 @@ export class ManagerComponent implements OnInit {
     const formData: any = new FormData();
     const files: Array<File> = this.filesToUpload;
     for (let i = 0; i < files.length; i++) {
-      formData.append("uploads[]", files[i], files[i]["name"]);
+      formData.append("files[]", files[i], files[i]["name"]);
     }
     this.formProduct.value.updatedAt = Date.now();
-    console.log({ formData, files });
+    console.log(formData.get("uploads[]"), files);
     this.productService
       .uploadFile(formData)
       .pipe(
         switchMap((response: any[]) => {
           console.log(this.formProduct.value, response);
           this.formProduct.value.imgProduct = response.map(
-            (file) => file.filename
+            (file) => file.originalname
           );
           return this.productService.updateProduct(
             product._id,
@@ -185,7 +189,7 @@ export class ManagerComponent implements OnInit {
     return this.productTable.find((product) => product._id === id);
   }
 
-  public deleteOrder(id:string){
+  public deleteOrder(id: string) {
     this.ordersService.deleteOrder(id).pipe(
       tap(() => {
         this.productService.setSubmit(null);
@@ -194,8 +198,12 @@ export class ManagerComponent implements OnInit {
     ).subscribe()
   }
 
-  public openDeleteOrder(order:IOrder){
+  public openDeleteOrder(order: IOrder) {
     this.order = order;
     this.isOrderDelete = true;
+  }
+
+  getBaseImg(img) {
+    return `${this.apiImg}product/img/${img}`
   }
 }

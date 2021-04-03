@@ -17,7 +17,8 @@ export class ComponentsComponent implements OnInit {
     private authService: AuthService,
     private productService: ProductService,
     private appConfig: AppConfigService
-  ) {}
+  ) { }
+  public apiImg = this.appConfig.config.api;
   public listData: IProduct[] = [];
 
   ngOnInit() {
@@ -37,7 +38,12 @@ export class ComponentsComponent implements OnInit {
       .pipe(tap((data: IProduct[]) => (this.listData = data)))
       .subscribe();
   }
+
   calculatorSale(product) {
     return (product.price * (100 - product.priceSale)) / 100;
+  }
+
+  getBaseImg(img) {
+    return `${this.apiImg}product/img/${img}`
   }
 }

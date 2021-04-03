@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { AppConfigService } from "app/appConfig.service";
 import { AuthService } from "app/shared/auth/auth.service";
 import { IProduct } from "app/shared/interfaces/ui.interfaces";
 import { tap } from "rxjs/operators";
@@ -14,8 +15,11 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private activeRoute: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private appConfig: AppConfigService
+
   ) {}
+  public apiImg = this.appConfig.config.api;
   public product: IProduct;
   public arrayNumber = [1, 2, 3, 4, 5];
   public selectedDefault = 1;
@@ -52,5 +56,9 @@ export class ProductDetailComponent implements OnInit {
 
   public calculatorSale(product: IProduct) {
     return (product.price * (100 - product.priceSale)) / 100;
+  }
+
+  getBaseImg(img) {
+    return `${this.apiImg}product/img/${img}`
   }
 }

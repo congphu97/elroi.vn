@@ -1,11 +1,10 @@
 import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Put, Query, Req, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
-import { Express } from 'express';
-
-
+import { editFileName, imageFileFilter } from 'src/utils/file-upload.utils';
+import * as path from 'path';
+import { diskStorage } from 'multer';
 
 @Controller('product')
 export class ProductController {
@@ -32,6 +31,13 @@ export class ProductController {
     }
 
 
+    @Get('/:id')
+    async getOneProduct(@Res() res, @Param('id') id): Promise<Product[] | null> {
+        const products = await this.productService.getOneProduct(id);
+        return res.status(HttpStatus.OK).json(products);
+    }
+
+
     @Delete('/:id')
     async deleteProduct(@Res() res, @Param('id') id): Promise<Product> {
         const newProduct = await this.productService.deleteProduct(id);
@@ -40,9 +46,21 @@ export class ProductController {
     }
 
     @Post('upload')
-  async testUpload(@Res() res, @Req() req, @Body('data') data) {
-    console.log(req.body);
-    console.log(data);
-    res.status(HttpStatus.OK).json({data: 'success'});
-  }
+    @UseInterceptors(FilesInterceptor('files[]', 20,
+        {
+            storage: diskStorage({
+                destination: './uploads/',
+                filename: editFileName,
+            }),
+            fileFilter: imageFileFilter
+        }))
+    async logFiles(@UploadedFiles() images, @Body() fileDto: any, @Res() res) {
+        return res.send(images);
+
+    }
+
+    @Get('/img/:imgpath')
+    async seeUploadedFile(@Param('imgpath') image, @Res() res) {
+        return res.sendFile(image, { root: './uploads' });
+    }
 }

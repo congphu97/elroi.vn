@@ -6,7 +6,7 @@
                 <div class="card page-carousel">
                     <ngb-carousel>
                         <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
-                            <img nz-image nzSrc="http://localhost:8080/{{img}}" alt="Random first slide" height="500px" width="100%">
+                            <img nz-image nzSrc="{{getBaseImg(img)}}" alt="Random first slide" height="500px" width="100%">
                         </ng-template>
                     </ngb-carousel>
                 </div>
@@ -66,7 +66,7 @@
             <div class="row">
                 <div *ngFor="let img of product?.imgProduct" class="col-md-4">
                     <div class="card">
-                        <img nz-image nzSrc="http://localhost:8080/{{img}}" height="400px">
+                        <img nz-image nzSrc="{{getBaseImg(img)}}" height="400px">
                         <div class="card-block">
 
                         </div>

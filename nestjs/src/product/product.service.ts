@@ -31,4 +31,9 @@ export class ProductService {
         const newProduct = this.productModel.findByIdAndDelete(id)
         return newProduct;
     }
+
+    async getOneProduct(id: string): Promise<Product> {
+        const newProduct = this.productModel.findOne({ _id: id })
+        return newProduct;
+    }
 }

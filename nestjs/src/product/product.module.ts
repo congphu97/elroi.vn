@@ -9,7 +9,8 @@ import { ProductService } from './product.service';
 
 @Module({
     imports: [TypegooseModule.forFeature([Product]),
-],
+
+    ],
     providers: [ProductService],
     controllers: [ProductController]
 })
