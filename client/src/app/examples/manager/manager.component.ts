@@ -125,10 +125,10 @@ export class ManagerComponent implements OnInit {
       .uploadFile(formData)
       .pipe(
         switchMap((response: any[]) => {
+          console.log(this.formProduct.value, response);
           this.formProduct.value.imgProduct = response.map(
             (file) => file.filename
           );
-          console.log(this.formProduct.value, response);
           return this.productService.updateProduct(
             product._id,
             this.formProduct.value

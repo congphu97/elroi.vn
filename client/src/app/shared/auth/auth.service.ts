@@ -3,15 +3,27 @@ import { HttpClient } from "@angular/common/http";
 import { map, tap, switchMap } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Subject } from "rxjs";
+import { AppConfigService } from "app/appConfig.service";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
-  private baseUrl = "http://localhost:8080/";
+  private api: string = "";
+  private resource = 'auth';
+  private setConfig() {
+    const api = this.appConfig.config["api"];
+    this.api = api ? `${api}${this.resource}/` : "";
+  }
+  constructor(
+    private http: HttpClient,
+    public jwtHelper: JwtHelperService,
+    private appConfig: AppConfigService
+  ) {
+    this.setConfig();
+  }
   public submit$$ = new Subject();
   login(body) {
-    return this.http.post(this.baseUrl + "login", body).pipe(
+    return this.http.post(this.api + "login", body).pipe(
       map((token) => {
         console.log("token", token);
         localStorage.setItem("jwtToken", JSON.stringify(token));
@@ -22,17 +34,16 @@ export class AuthService {
   }
 
   register(body) {
-    return this.http.post(this.baseUrl + "createUser", body);
+    return this.http.post(this.api + "register", body);
   }
 
   getUser(body) {
-    return this.http.post(this.baseUrl + "getUser", body);
-
+    return this.http.post(this.api + "getUser", body);
   }
 
   isAuthenticated(): boolean {
     const token = JSON.parse(localStorage.getItem("jwtToken"));
-    this.setSubmit()
+    this.setSubmit();
     return !this.jwtHelper.isTokenExpired(token);
   }
 
@@ -44,7 +55,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem("jwtToken");
     this.setSubmit();
-
   }
 
   getSubmit() {

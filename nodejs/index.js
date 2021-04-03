@@ -3,7 +3,7 @@ require('dotenv').config()
 var express = require("express");
 const app = express();
 var cors = require("cors");
-app.listen(8080)
+app.listen(3000)
 app.get('/', (req, res) => {
   res.send('Hello phu')
 })
@@ -358,7 +358,7 @@ var storage = multer.diskStorage({
   }
 });
 var upload = multer({ storage: storage });
-app.post("/upload", upload.array("uploads[]", 12), function (req, res) {
+app.post("/product/upload", upload.array("uploads[]", 12), function (req, res) {
   console.log('files', req.files);
   res.send(req.files);
 });

@@ -18,7 +18,7 @@
                         <div class="card page-carousel">
                             <ngb-carousel>
                                 <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
-                                    <img src="http://localhost:8080/{{img}}" [routerLink]="['/detail', product._id]">
+                                    <img src="appConfig.api{{img}}" [routerLink]="['/detail', product._id]">
                                     <div class="carousel-caption">
                                         <p>{{product.productName}}</p>
                                     </div>

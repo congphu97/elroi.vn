@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { RouterModule } from "@angular/router";
@@ -28,7 +28,8 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ProductComponent } from "./examples/product/product.component";
 import { NzMenuModule } from "ng-zorro-antd/menu";
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { NzCarouselModule } from "ng-zorro-antd/carousel";
+import { AppConfigService, initializerFn } from "./appConfig.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +66,12 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
     AuthService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     {
+      provide: APP_INITIALIZER,
+      useFactory: initializerFn,
+      deps: [AppConfigService],
+      multi: true,
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
@@ -73,7 +80,7 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
