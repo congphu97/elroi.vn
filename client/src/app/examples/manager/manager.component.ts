@@ -28,8 +28,7 @@ export class ManagerComponent implements OnInit {
     private productService: ProductService,
     private ordersService: OrdersService,
     private appConfig: AppConfigService
-
-  ) { }
+  ) {}
   public productTable: IProduct[] = [];
   public orderTable: IOrder[] = [];
   ngOnInit(): void {
@@ -41,6 +40,7 @@ export class ManagerComponent implements OnInit {
   public isVisibleMiddle = false;
   public isVisibleDelete = false;
   public isOrderDelete = false;
+  public isOrderDetail = false;
   public product: IProduct;
   public order: IOrder;
   public titleModal: string = "";
@@ -79,6 +79,7 @@ export class ManagerComponent implements OnInit {
     this.isVisibleMiddle = false;
     this.isVisibleDelete = false;
     this.isOrderDelete = false;
+    this.isOrderDetail = false;
   }
 
   public getAllProduct() {
@@ -91,10 +92,12 @@ export class ManagerComponent implements OnInit {
   private listenSubmit() {
     this.productService
       .getSubmit$$()
-      .pipe(tap((product: IProduct) => {
-        this.getAllProduct();
-        this.getAllOrder();
-      }))
+      .pipe(
+        tap((product: IProduct) => {
+          this.getAllProduct();
+          this.getAllOrder();
+        })
+      )
       .subscribe();
   }
   private createProduct() {
@@ -190,12 +193,15 @@ export class ManagerComponent implements OnInit {
   }
 
   public deleteOrder(id: string) {
-    this.ordersService.deleteOrder(id).pipe(
-      tap(() => {
-        this.productService.setSubmit(null);
-        this.handleCancelMiddle()
-      })
-    ).subscribe()
+    this.ordersService
+      .deleteOrder(id)
+      .pipe(
+        tap(() => {
+          this.productService.setSubmit(null);
+          this.handleCancelMiddle();
+        })
+      )
+      .subscribe();
   }
 
   public openDeleteOrder(order: IOrder) {
@@ -203,7 +209,12 @@ export class ManagerComponent implements OnInit {
     this.isOrderDelete = true;
   }
 
-  getBaseImg(img) {
-    return `${this.apiImg}product/img/${img}`
+  public getBaseImg(img) {
+    return `${this.apiImg}product/img/${img}`;
+  }
+
+  public openModelDetail(order: IOrder) {
+    this.isOrderDetail = true;
+    this.order = order;
   }
 }

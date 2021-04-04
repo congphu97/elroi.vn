@@ -39,11 +39,13 @@ export class ComponentsComponent implements OnInit {
       .subscribe();
   }
 
-  calculatorSale(product) {
-    return (product.price * (100 - product.priceSale)) / 100;
+ 
+  public calculatorSale(product: IProduct) {
+    const priceSale = product.priceSale || 0;
+    return (product.price * (100 - priceSale)) / 100;
   }
 
-  getBaseImg(img) {
+  public getBaseImg(img:string) {
     return `${this.apiImg}product/img/${img}`
   }
 }

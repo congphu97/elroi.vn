@@ -1,11 +1,22 @@
 .main {
-    margin-top: 200px;
+  margin-top: 200px;
 }
 
 nz-select {
-    width: 100%;
+  width: 100%;
 }
 
 img {
-    object-fit: cover;
+  object-fit: cover;
+}
+
+::ng-deep .ant-notification-notice-message {
+  // background: black;
+  // color: white;
+  color:black;
+  padding: 5px;
+  margin-bottom: 0;
+}
+::ng-deep .ant-notification-notice {
+  padding: 0;
 }

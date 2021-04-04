@@ -10,32 +10,25 @@
       <nz-table nzBordered [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
         [nzNoResult]="'Bạn chưa có đơn hàng nào'" nzTableLayout="fixed">
         <thead>
-          <tr>
-            <th nzWidth="40px">#</th>
-            <th nzWidth="120px">Thời gian đặt</th>
-            <th nzWidth="120px">Tên khách hàng</th>
-            <th nzWidth="120px">Số điện thoại</th>
-            <th nzWidth="120px">Email</th>
+          <tr class="header">
+            <th nzWidth="40px">STT</th>
+            <th nzWidth="100px">Thời gian đặt</th>
+            <th nzWidth="120px">Tên KH</th>
+            <th nzWidth="100px">Số điện thoại</th>
             <th nzWidth="200px">Địa chỉ</th>
-            <th nzWidth="200px">Đơn hàng</th>
             <th nzWidth="100px">Tổng đơn</th>
             <th nzWidth="100px">Giao hàng</th>
             <th  nzWidth="100px">Thao tác</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of orderTable; let i = index">
+          <tr *ngFor="let order of orderTable; let i = index" (click)="openModelDetail(order)">
             <td>{{ i + 1 }}</td>
             <td>{{ order.createdAt | date: "dd/MM/yyyy hh:mm:ss" }}</td>
             <td>{{ order.customerName }}</td>
             <td>{{ order.numberPhone }}</td>
-            <td>{{ order.email }}</td>
             <td>{{ order.address }}</td>
-            <td>
-              <ng-container *ngFor="let pro of order.idProduct">
-                {{ getDetailProductOrder(pro.id).productName }} ( {{pro.number}}) <br>
-              </ng-container>
-            </td>
+     
             <td>{{ order.totalPrice | currency: "VND":true }}</td>
             <td>
               <nz-switch [(ngModel)]="order.status" (ngModelChange)="changeStatus(order)"></nz-switch>
@@ -158,4 +151,27 @@
 <nz-modal [(nzVisible)]="isOrderDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
   (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteOrder(order._id)">
   Bạn chắc chắn muốn Xóa đơn hàng này ?
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isOrderDetail" nzClosable='false' nzTitle="Thông tin đơn hàng" nzCentered nzWidth="80%"
+  (nzOnCancel)="handleCancelMiddle()" >
+  <nz-descriptions *ngIf="order" nzTitle="User Info" nzBordered nzSize="'small'" [nzColumn]="	{ xxl: 2 , xl: 2 , lg: 2 , md: 2 , sm: 2 , xs: 1 }">
+    <nz-descriptions-item nzTitle="Thời gian đặt">{{ order.createdAt | date: "dd/MM/yyyy hh:mm:ss" }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Tên Khách hàng">{{ order.customerName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Số điện thoại">{{ order.numberPhone }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Email">
+      {{ order.email }}    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Địa chỉ">
+      {{ order.address }}    </nz-descriptions-item>
+
+    <nz-descriptions-item nzTitle="Đơn hàng">
+      <ng-container *ngFor="let pro of order.idProduct">
+      {{ getDetailProductOrder(pro.id).productName }} ( {{pro.number}}) <br>
+    </ng-container>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Tổng đơn">{{ order.totalPrice | currency: "VND":true }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Tình trạng giao hàng">
+      {{order.status? 'Đã giao hàng': 'Chưa giao hàng'}}
+    </nz-descriptions-item>
+  </nz-descriptions>
 </nz-modal>

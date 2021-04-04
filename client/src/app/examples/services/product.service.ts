@@ -51,6 +51,6 @@ export class ProductService {
   }
 
   public getProductQuery(key: string, value: string) {
-    return this.http.get(this.api + "product?" + key + "=" + value);
+    return this.http.get(this.api  + key + "=" + value);
   }
 }

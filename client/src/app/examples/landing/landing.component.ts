@@ -19,13 +19,14 @@ export class LandingComponent implements OnInit {
     private productService: ProductService,
     private OrdersService: OrdersService
   ) {}
-  private listData$ = (id:string) => this.productService.getOneProduct(id);
+  private listData$ = (id: string) => this.productService.getOneProduct(id);
   ngOnInit() {
     this.configCart();
     this.getUser();
   }
   public listOfData = [];
   public listCart;
+  public totalPrice:number = 0;
   public user: IUser;
   public orderForm = new FormGroup({
     username: new FormControl("", Validators.required),
@@ -40,13 +41,15 @@ export class LandingComponent implements OnInit {
     from(this.listCart)
       .pipe(
         flatMap((item: any) =>
-          forkJoin(this.listData$(item._id), of(item.number))
+          forkJoin(this.listData$(item._id), of(item.number),of(item.size))
         ),
         tap((data) => {
           this.listOfData.push({
             product: data[0],
             number: data[1],
+            size:data[2]
           });
+          console.log(this.listOfData)
         })
       )
       .subscribe();
@@ -54,14 +57,13 @@ export class LandingComponent implements OnInit {
 
   current = 0;
   private getUser() {
-    console.log(this.authService.getAuthenticated());
     const user = this.authService.getAuthenticated();
     if (!user) return;
     this.authService
       .getUser({ username: user.username })
       .pipe(
-        tap((user: IUser[]) => (this.user = user[0])),
-        tap((user: IUser[]) => this.setFormValue(user[0]))
+        tap((user: IUser) => (this.user = user)),
+        tap((user: IUser) => this.setFormValue(user))
       )
       .subscribe();
   }
@@ -80,7 +82,11 @@ export class LandingComponent implements OnInit {
   }
 
   next(): void {
+    this.totalPrice = 0;
     this.current += 1;
+    this.listOfData.map(
+      (item) => (this.totalPrice += this.calculatorSale(item.product))
+    );
   }
 
   done(): void {
@@ -88,17 +94,13 @@ export class LandingComponent implements OnInit {
   }
 
   complete() {
-    let totalPrice = 0;
     this.current += 1;
-    this.listOfData.map(
-      (item) => (totalPrice += this.calculatorSale(item.product))
-    );
     const idProduct = this.listOfData.map((item) => ({
       id: item.product._id,
       number: item.number,
     }));
     this.orderForm.value.idProduct = idProduct;
-    this.orderForm.value.totalPrice = totalPrice;
+    this.orderForm.value.totalPrice = this.totalPrice;
     this.orderForm.value.status = false;
     this.orderForm.value.customerName = this.user.name;
     this.orderForm.value.createdAt = Date.now();
@@ -114,6 +116,12 @@ export class LandingComponent implements OnInit {
   }
 
   public calculatorSale(product: IProduct) {
-    return (product.price * (100 - product.priceSale)) / 100;
+    const priceSale = product.priceSale || 0;
+    return (product.price * (100 - priceSale)) / 100;
+  }
+
+  public changeSelect(product:IProduct,value: number)  {
+    console.log({product},this.calculatorSale(product) * value )
+    return this.calculatorSale(product) * value
   }
 }

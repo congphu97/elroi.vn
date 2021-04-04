@@ -5,7 +5,7 @@ import { forkJoin } from "rxjs";
 import { flatMap, map, tap } from "rxjs/operators";
 import { OrdersService } from "../services/orders.service";
 import { ProductService } from "../services/product.service";
-import * as _ from 'lodash';  
+import * as _ from "lodash";
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
@@ -34,13 +34,15 @@ export class ProfileComponent implements OnInit {
     this.authService
       .getUser({ username: user.username })
       .pipe(
-        tap((user: IUser[]) => (this.user = user[0])),
-        tap((user: IUser[]) => console.log(user[0])),
-        map((user: IUser[]) => user[0].history),
+        tap((user: IUser) => (this.user = user)),
+        tap((user: IUser) => console.log(user)),
+        map((user: IUser) => user.history),
         flatMap((history: any) => {
-          return forkJoin(history.map((id) => this.orderService.getOneOrder(id)));
+          return forkJoin(
+            history.map((id) => this.orderService.getOneOrder(id))
+          );
         }),
-        tap((historyList) => (this.historyList = _.compact(historyList))),
+        tap((historyList) => (this.historyList = _.compact(historyList)))
       )
       .subscribe();
     console.log(this.user);

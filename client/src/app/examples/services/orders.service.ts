@@ -19,7 +19,7 @@ export class OrdersService {
     this.setConfig();
   }
   public createOrder(order: IOrder, username: string) {
-    return this.http.post(this.api + "order", {
+    return this.http.post(this.api , {
       order: order,
       username: username,
     });

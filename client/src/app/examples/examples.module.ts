@@ -25,6 +25,8 @@ import { NzSwitchModule } from "ng-zorro-antd/switch";
 import { SigninComponent } from "./signin/signin.component";
 import { NzMenuModule } from "ng-zorro-antd/menu";
 import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,6 +46,8 @@ import { NzButtonModule } from "ng-zorro-antd/button";
     NzMenuModule,
     NzSelectModule,
     NzButtonModule,
+    NzDescriptionsModule,
+    NzNotificationModule
 
   ],
   declarations: [

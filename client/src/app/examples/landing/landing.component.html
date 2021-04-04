@@ -7,10 +7,10 @@
                 <nz-step nzTitle="Hoàn tất"></nz-step>
             </nz-steps>
 
-            <div class="steps-content">
+            <div class="steps-content p-0">
                 <div [ngSwitch]="current">
                     <div *ngSwitchCase="0">
-                        <div class="row">
+                        <div class="h-100">
                             <div class="col-md-8 mr-auto ml-auto">
                                 <h3 class="title">Giỏ hàng</h3>
                                 <h5 class="description">
@@ -35,20 +35,14 @@
                                             <td>{{ i +1 }}</td>
                                             <td>{{ data.product.productName }}</td>
                                             <td>{{ data.number }}</td>
-                                            <td> {{data.product.size}} </td>
+                                            <td> {{data.size}} </td>
                                             <td>
-                                                <p *ngIf="!data.product.priceSale" class="font-weight-bold">
-                                                    {{data.product.price |
-                                                    currency :
-                                                    "VND":true}}</p>
-                                                <p *ngIf="data.product.priceSale"> <span
-                                                        class=" font-weight-bold text-danger">{{
-                                                        calculatorSale(data.product) * data.number | currency : "VND":true}}</span>
-                                                    <s class="m-0 pl-2">{{data.product.price * data.number | currency : "VND":true}}
-                                                    </s>
-                                                    <span
-                                                        class="font-weight-bold text-danger">(-{{data.product.priceSale}}
-                                                        %)</span>
+                                                <p *ngIf="!data.product.priceSale" class="font-weight-bold">{{
+                                                    changeSelect(data.product ,data.number) | currency : "VND":true}}</p>
+                                                <p *ngIf="data.product.priceSale"> <span class=" font-weight-bold text-danger">{{
+                                                    changeSelect(data.product,data.number) | currency : "VND":true}}</span>
+                                                    <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}} </s>
+                                                    <span class="font-weight-bold text-danger">(-{{data.product.priceSale}} %)</span>
                                                 </p>
                                             </td>
                                             <td>
@@ -61,8 +55,8 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngSwitchCase="1" class="d-flex">
-                        <form class="col-6" [formGroup]="orderForm">
+                    <div *ngSwitchCase="1" class="d-flex h-100 flex-container">
+                        <form class="flex-item-left" [formGroup]="orderForm">
                             <h6>Thông tin giao hàng:</h6>
                             <div class="d-flex  m-1">
                                 <label class="col-3">Họ và tên</label>
@@ -75,31 +69,58 @@
                             </div>
                             <div class="d-flex  m-1">
                                 <label class="col-3">Số điện thoại</label>
-                                <input class="form-control" formControlName="numberphone">
+                                <input class="form-control" formControlName="numberPhone">
                             </div>
                             <div class="d-flex m-1">
                                 <label class="col-3">Địa chỉ giao hàng</label>
                                 <input class="form-control" formControlName="address">
                             </div>
                             <div>
-                                Lưu ý:
+                                <strong>Lưu ý:</strong>
                                 <p class="p-0">
                                     1. Đơn hàng sẽ được xác nhận thông qua email hoặc bộ phận sale sẽ liên lạc với bạn
-                                    trong
-                                    24h kể từ khi đơn hàng hoàn thành để xác nhận: thông tin nhận hàng, tổng hoá đơn và
-                                    thời
-                                    gian giao hàng. </p><br>
+                                    trong 24h kể từ khi đơn hàng hoàn thành để xác nhận: thông tin nhận hàng, tổng hoá đơn và
+                                    thời gian giao hàng. </p><br>
                                 <p class="p-0">
                                     2. Đơn hàng của bạn sẽ được gửi đi trong 24h sau khi xác nhận, thời gian nhận hàng
-                                    từ
-                                    1-3 ngày tuỳ vào vị trí giao hàng. <br></p>
+                                    từ 1-3 ngày tuỳ vào vị trí giao hàng. <br></p>
                                 <p class="p-0">
                                     3. Thực hiện thanh toán như tổng hoá đơn đã được xác nhận. Vui lòng lại hoá đơn được
                                     đính kèm ở đơn hàng để được hỗ trợ đổi (nếu có). <br></p>
                             </div>
                         </form>
-                        <div class="col-6">
-                            Flex 2
+                        <div class=" flex-item-right">
+                            <nz-table #basicTable [nzData]="listCart" [nzFrontPagination]="false"
+                            [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
+                            [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Kích cỡ</th>
+                                    <th>Giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of listOfData;let i = index;">
+                                    <td>{{ i +1 }}</td>
+                                    <td>{{ data.product.productName }}</td>
+                                    <td>{{ data.number }}</td>
+                                    <td> {{data.size}} </td>
+                                    <td>
+                                        <p *ngIf="!data.product.priceSale" class="font-weight-bold">{{
+                                            changeSelect(data.product ,data.number) | currency : "VND":true}}</p>
+                                        <p *ngIf="data.product.priceSale"> <span class=" font-weight-bold text-danger">{{
+                                            changeSelect(data.product,data.number) | currency : "VND":true}}</span>
+                                            <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}} </s>
+                                            <span class="font-weight-bold text-danger">(-{{data.product.priceSale}} %)</span>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                        <h6 class="payment p-3">Tổng đơn cần phải thanh toán : {{totalPrice}}</h6>
                         </div>
                     </div>
                     <div *ngSwitchCase="2">
@@ -109,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            <div class="steps-action">
+            <div class="steps-action p-0">
                 <div *ngIf="current === 0">
                     <button class="btn" nzType="default" [disabled]="listCart?.length < 1" (click)="next()">
                         Thanh toán

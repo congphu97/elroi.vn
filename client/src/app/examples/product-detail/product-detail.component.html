@@ -20,13 +20,18 @@
                         <p class="">Mã sản phẩm: {{product._id}}</p>
                         <p class="info-title font-weight-bold">Kích thước: {{product.size}}</p>
                         <nz-divider class="m-1"></nz-divider>
+                        <p class="">Kích cỡ:</p>
+                        <nz-select [(ngModel)]="selectedSize" (ngModelChange)="changeSelectSize($event)">
+                            <nz-option *ngFor="let p of getSizeProduct(product.size)" [nzValue]="p" [nzLabel]="p"></nz-option>
+                        </nz-select>
+                        <nz-divider class="m-1"></nz-divider>
                         <p class="">Số lượng</p>
                         <nz-select [(ngModel)]="selectedDefault" (ngModelChange)="changeSelect($event)">
                             <nz-option *ngFor="let p of arrayNumber" [nzValue]="p" [nzLabel]="p"></nz-option>
                         </nz-select>
                         <nz-divider class="m-1"></nz-divider>
-                        <p *ngIf="!product.priceSale" class="font-weight-bold">{{product.price | currency :
-                            "VND":true}}</p>
+                        <p *ngIf="!product.priceSale" class="font-weight-bold">{{
+                            changeSelect(selectedDefault) | currency : "VND":true}}</p>
                         <p *ngIf="product.priceSale"> <span class=" font-weight-bold text-danger">{{
                             changeSelect(selectedDefault) | currency : "VND":true}}</span>
                             <s class="m-0 pl-2">{{product.price | currency : "VND":true}} </s>
@@ -36,7 +41,7 @@
                             <button type="button" disabled="true" class="w-100 btn btn-default">Hết hàng</button>
                         </div>
                         <div *ngIf="product.status !== 'Hết hàng'">
-                            <button type="button" class="w-100 btn btn-default" (click)="addCart()">Thêm vào
+                            <button type="button" class="w-100 btn btn-default" (click)="addCart()" (click)="createBasicNotification(template)">Thêm vào
                                 giỏ</button>
                         </div>
                         <nz-divider class="m-1"></nz-divider>
@@ -77,3 +82,24 @@
     </div>
 
 </div>
+<ng-template #template let-notification>
+    <div>
+        <div class="ant-notification-notice-content">
+            <div>
+              <div class="ant-notification-notice-message font-weight-bold text-center">Thêm giỏ hàng thành công</div>
+              <div class="ant-notification-notice-description p-2">
+                      <div class="d-flex">
+                          <img nz-image nzSrc="{{getBaseImg(product?.imgProduct[0])}}" height="150px" width="150px">
+                          <div class="font-weight-bold ml-2">
+                            Tên sản phẩm : <p>{{product.productName}}</p>
+                  </div>
+                </div>
+
+              </div>
+             
+            </div>
+          </div>
+      </div>
+  </ng-template>
+
+ 

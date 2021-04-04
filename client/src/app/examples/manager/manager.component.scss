@@ -5,3 +5,11 @@ label {
 .wrapper {
     margin-top: 200px;
 }
+
+::ng-deep .header > th {
+    background: khaki;
+}
+
+::ng-deep .ant-descriptions-item-label {
+    font-weight: 600;
+}
