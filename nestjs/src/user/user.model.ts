@@ -22,11 +22,11 @@ export class User {
     email: string
 
     @prop()
-    phone: number
+    numberPhone: number
 
 
     @prop()
-    history: []
+    history: any[]
 
     @prop()
     role: string

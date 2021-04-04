@@ -12,7 +12,6 @@ export class ProductService {
     }
 
     async getProduct(): Promise<Product[]> {
-        console.log(process.env.HOST)
         return await this.productModel.find().exec();
     }
 

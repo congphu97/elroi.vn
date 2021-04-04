@@ -1,28 +1,32 @@
-import { prop, } from '@typegoose/typegoose';
+import { prop } from '@typegoose/typegoose';
 export class Order {
-    @prop()
-    productName: string
+  @prop()
+  customerName: string;
 
+  @prop()
+  category: string;
+  
+  @prop()
+  address: string;
 
-    @prop()
-    category: string
-    
-    @prop()
-    note: string
+  @prop()
+  email: string;
 
-    @prop()
-    status: string
-    @prop()
+  @prop()
+  idProduct: [];
 
-    imgProduct: []
-    @prop()
+  @prop()
+  numberPhone: number;
 
-    price: number
+  @prop()
+  status: boolean;
 
-    @prop()
-    size: string
+  @prop()
+  totalPrice: number;
 
-    @prop()
-    password: number
+  @prop()
+  createdAt: string;
 
+  @prop()
+  updateAt: string;
 }

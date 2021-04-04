@@ -13,9 +13,15 @@ export class OrderController {
         return res.status(HttpStatus.OK).json(orders);
     }
 
+    @Get('/:id')
+    async getOne(@Res() res, @Param('id') id): Promise<Order[] | null> {
+        const orders = await this.orderService.getOne(id);
+        return res.status(HttpStatus.OK).json(orders);
+    }
+
     @Post()
-    async createOrder(@Res() res, @Body() order: Order): Promise<Order> {
-        const newOrder = await this.orderService.createOrder(order);
+    async createOrder(@Res() res, @Body() body): Promise<Order> {
+        const newOrder = await this.orderService.createOrder(body);
         if (!newOrder) throw new NotFoundException('Create fail');
         return res.status(HttpStatus.OK).json(newOrder);
     }
