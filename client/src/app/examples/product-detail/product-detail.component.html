@@ -6,7 +6,8 @@
                 <div class="card page-carousel">
                     <ngb-carousel>
                         <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
-                            <img nz-image nzSrc="{{getBaseImg(img)}}" alt="Random first slide" height="500px" width="100%">
+                            <img nz-image nzSrc="{{getBaseImg(img)}}" alt="Random first slide" height="500px"
+                                width="100%">
                         </ng-template>
                     </ngb-carousel>
                 </div>
@@ -20,12 +21,13 @@
                         <p class="">Mã sản phẩm: {{product._id}}</p>
                         <p class="info-title font-weight-bold">Kích thước: {{product.size}}</p>
                         <nz-divider class="m-1"></nz-divider>
-                        <p class="">Kích cỡ:</p>
+                        <p class="info-title font-weight-bold">Kích cỡ:</p>
                         <nz-select [(ngModel)]="selectedSize" (ngModelChange)="changeSelectSize($event)">
-                            <nz-option *ngFor="let p of getSizeProduct(product.size)" [nzValue]="p" [nzLabel]="p"></nz-option>
+                            <nz-option *ngFor="let p of getSizeProduct(product.size)" [nzValue]="p" [nzLabel]="p">
+                            </nz-option>
                         </nz-select>
                         <nz-divider class="m-1"></nz-divider>
-                        <p class="">Số lượng</p>
+                        <p class="info-title font-weight-bold">Số lượng</p>
                         <nz-select [(ngModel)]="selectedDefault" (ngModelChange)="changeSelect($event)">
                             <nz-option *ngFor="let p of arrayNumber" [nzValue]="p" [nzLabel]="p"></nz-option>
                         </nz-select>
@@ -33,7 +35,7 @@
                         <p *ngIf="!product.priceSale" class="font-weight-bold">{{
                             changeSelect(selectedDefault) | currency : "VND":true}}</p>
                         <p *ngIf="product.priceSale"> <span class=" font-weight-bold text-danger">{{
-                            changeSelect(selectedDefault) | currency : "VND":true}}</span>
+                                changeSelect(selectedDefault) | currency : "VND":true}}</span>
                             <s class="m-0 pl-2">{{product.price | currency : "VND":true}} </s>
                             <span class="font-weight-bold text-danger">(-{{product.priceSale}} %)</span>
                         </p>
@@ -41,7 +43,8 @@
                             <button type="button" disabled="true" class="w-100 btn btn-default">Hết hàng</button>
                         </div>
                         <div *ngIf="product.status !== 'Hết hàng'">
-                            <button type="button" class="w-100 btn btn-default" (click)="addCart()" (click)="createBasicNotification(template)">Thêm vào
+                            <button type="button" class="w-100 btn btn-default" (click)="addCart()"
+                                (click)="createBasicNotification(template)">Thêm vào
                                 giỏ</button>
                         </div>
                         <nz-divider class="m-1"></nz-divider>
@@ -83,23 +86,18 @@
 
 </div>
 <ng-template #template let-notification>
-    <div>
         <div class="ant-notification-notice-content">
-            <div>
-              <div class="ant-notification-notice-message font-weight-bold text-center">Thêm giỏ hàng thành công</div>
-              <div class="ant-notification-notice-description p-2">
-                      <div class="d-flex">
-                          <img nz-image nzSrc="{{getBaseImg(product?.imgProduct[0])}}" height="150px" width="150px">
-                          <div class="font-weight-bold ml-2">
-                            Tên sản phẩm : <p>{{product.productName}}</p>
-                  </div>
+                <div class="ant-notification-notice-message font-weight-bold text-center">Thêm giỏ hàng thành công</div>
+                <div class="ant-notification-notice-description p-2">
+                    <div class="d-flex">
+                        <img nz-image nzSrc="{{getBaseImg(product?.imgProduct[0])}}" height="100px" width="100px">
+                        <div class="ml-2 notis  w-100">
+                            <p> {{product.productName}}</p>
+                            <p> Số lượng : {{selectedDefault}}</p>
+                            <nz-divider class="m-1"></nz-divider> 
+                            <p class="font-weight-bold">Tổng đơn hàng : {{changeSelect(selectedDefault) | currency : "VND":true}}</p>
+                        </div>
+                    </div>
                 </div>
-
-              </div>
-             
-            </div>
-          </div>
-      </div>
-  </ng-template>
-
- 
+        </div>
+</ng-template>

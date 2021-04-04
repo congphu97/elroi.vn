@@ -59,21 +59,25 @@
                         <form class="flex-item-left" [formGroup]="orderForm">
                             <h6>Thông tin giao hàng:</h6>
                             <div class="d-flex  m-1">
-                                <label class="col-3">Họ và tên</label>
+                                <label class="col-4 m-auto">Họ và tên</label>
                                 <input class="form-control" formControlName="username"
                                     [attr.disabled]="checkDisable('username')">
                             </div>
                             <div class="d-flex  m-1">
-                                <label class="col-3">Email</label>
+                                <label class="col-4 m-auto">Email</label>
                                 <input class="form-control" formControlName="email">
                             </div>
                             <div class="d-flex  m-1">
-                                <label class="col-3">Số điện thoại</label>
+                                <label class="col-4 m-auto">Số điện thoại</label>
                                 <input class="form-control" formControlName="numberPhone">
                             </div>
                             <div class="d-flex m-1">
-                                <label class="col-3">Địa chỉ giao hàng</label>
+                                <label class="col-4 m-auto">Địa chỉ giao hàng</label>
                                 <input class="form-control" formControlName="address">
+                            </div>
+                            <div class="d-flex m-1">
+                                <label class="col-4 m-auto">Hình thức thanh toán: </label>
+                                <input class="form-control" placeholder="COD" [disabled]="true">
                             </div>
                             <div>
                                 <strong>Lưu ý:</strong>
@@ -120,7 +124,7 @@
                                 </tr>
                             </tbody>
                         </nz-table>
-                        <h6 class="payment p-3">Tổng đơn cần phải thanh toán : {{totalPrice}}</h6>
+                        <h6 class="font-weight-bold payment p-3">Cần thanh toán : <strong>{{totalPrice  | currency : "VND":true}}</strong></h6>
                         </div>
                     </div>
                     <div *ngSwitchCase="2">
@@ -145,7 +149,7 @@
                     </button>
                 </div>
                 <div *ngIf="current === 2">
-                    <button class="btn" nzType="default" (click)="done()">
+                    <button class="btn" nzType="default"  [routerLink]="['/home']">
                         Tiếp tục mua sắm
                     </button>
 

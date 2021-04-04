@@ -49,7 +49,6 @@ export class LandingComponent implements OnInit {
             number: data[1],
             size:data[2]
           });
-          console.log(this.listOfData)
         })
       )
       .subscribe();
@@ -121,7 +120,6 @@ export class LandingComponent implements OnInit {
   }
 
   public changeSelect(product:IProduct,value: number)  {
-    console.log({product},this.calculatorSale(product) * value )
     return this.calculatorSale(product) * value
   }
 }

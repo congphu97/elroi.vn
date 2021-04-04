@@ -6,10 +6,9 @@ label {
     margin-top: 200px;
 }
 
-::ng-deep .header > th {
-    background: khaki;
+::ng-deep .ant-table-thead > tr > th {
+    background: #c1c0b6;
 }
-
 ::ng-deep .ant-descriptions-item-label {
     font-weight: 600;
 }

@@ -1,7 +1,7 @@
 {
     "NAVBAR": {
         "male": {
-            "title": "Nam",
+            "title": "MEN",
             "children": {
                 "menu1": "Áo",
                 "menu2": "Áo khoác nam",
@@ -13,7 +13,7 @@
             }
         },
         "female": {
-            "title": "Nữ",
+            "title": "WOMAN",
             "children": {
                 "menu1": "Áo",
                 "menu2": "Áo khoác nữ",

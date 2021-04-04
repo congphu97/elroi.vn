@@ -125,42 +125,53 @@
         </div>
         <div class="navbar-collapse p-0" id="navbarToggler">
             <ul nz-menu nzMode="inline" style="width: 240px;" class=" d-lg-none" [nzTheme]=" 'light'">
-                <li nz-menu-item >
-                    <span>Trang chủ</span>
-                  </li>
-                <li nz-submenu nzTitle="Nam">
+                <li nz-submenu nzTitle="{{'NAVBAR.male.title' | translate}}">
                   <ul>
-                    <li nz-menu-item>Áo</li>
-                    <li nz-menu-item>Áo khoác nam</li>
-                    <li nz-submenu nzTitle="Quần">
+                    <li nz-menu-item [routerLink]="['/product', 'ao-nam']">{{'NAVBAR.male.children.menu1' |
+                        translate}}</li>
+                    <li nz-menu-item [routerLink]="['/product', 'ao-khoac-nam']">
+                        {{'NAVBAR.male.children.menu2' | translate}}</li>
+                    <li nz-submenu  [routerLink]="['/product', 'quan-nam']" nzTitle="{{'NAVBAR.male.children.menu3' | translate}}">
                       <ul>
-                        <li nz-menu-item>Quần đùi</li>
-                        <li nz-menu-item>Quần dài</li>
+                        <li nz-menu-item [routerLink]="['/product', 'quan-dui-nam']">
+                            {{'NAVBAR.male.children.menu4' | translate}}</li>
+                        <li nz-menu-item [routerLink]="['/product', 'quan-dai-nam']">
+                            {{'NAVBAR.male.children.menu5' | translate}}</li>
                       </ul>
                     </li>
-                    <li nz-menu-item>Giày</li>
-                    <li nz-menu-item>Phụ kiện</li>
+                    <li nz-menu-item [routerLink]="['/product', 'giay-nam']">{{'NAVBAR.male.children.menu6'
+                        | translate}}</li>
+                    <li nz-menu-item [routerLink]="['/product', 'phu-kien-nam']">
+                        {{'NAVBAR.male.children.menu7' | translate}}</li>
                   </ul>
                 </li>
-                <li nz-submenu nzTitle="Nữ">
+                <li nz-submenu nzTitle="{{'NAVBAR.female.title' | translate}}">
                     <ul>
-                        <li nz-menu-item>Áo</li>
-                        <li nz-menu-item>Áo khoác nữ</li>
-                        <li nz-submenu nzTitle="Quần">
-                          <ul>
-                            <li nz-menu-item>Quần đùi</li>
-                            <li nz-menu-item>Quần dài</li>
-                          </ul>
-                        </li>
-                      <li nz-menu-item>Giày</li>
-                      <li nz-menu-item>Phụ kiện</li>
+                        <li nz-menu-item [routerLink]="['/product', 'ao-nu']">{{'NAVBAR.female.children.menu1' |
+                            translate}}</li>
+                            <li nz-menu-item [routerLink]="['/product', 'ao-khoac-nu']">
+                                {{'NAVBAR.female.children.menu2' | translate}}</li>
+                                <li nz-submenu nzTitle="{{'NAVBAR.male.children.menu3' | translate}}"
+                                [routerLink]="['/product', 'quan-nu']">
+                                <ul>
+                                    <li nz-menu-item [routerLink]="['/product', 'quan-dui-nu']">
+                                        {{'NAVBAR.female.children.menu4' | translate}}</li>
+                                    <li nz-menu-item [routerLink]="['/product', 'quan-dai-nu']">
+                                        {{'NAVBAR.female.children.menu5' | translate}}</li>
+                                </ul>
+                            </li>
+                            <li nz-menu-item [routerLink]="['/product', 'giay-nu']">{{'NAVBAR.female.children.menu6'
+                                | translate}}</li>
+                            <li nz-menu-item [routerLink]="['/product', 'phu-kien-nu']">
+                                {{'NAVBAR.female.children.menu7' | translate}}</li>
                     </ul>
                   </li>
                   <li nz-menu-item >
-                    <span>Sản phẩm mới</span>
+                    <span> {{'NAVBAR.new' | translate}}
+                </span>
                   </li>
                   <li nz-menu-item >
-                    <span>Khuyến mãi</span>
+                    <span>{{'NAVBAR.sale' | translate}}</span>
                   </li>
               </ul>
         </div>

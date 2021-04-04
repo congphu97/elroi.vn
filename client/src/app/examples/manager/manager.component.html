@@ -7,11 +7,11 @@
 <div class="d-flex container">
   <nz-tabset>
     <nz-tab nzTitle="Quản lý đơn hàng">
-      <nz-table nzBordered [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
+      <nz-table  [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
         [nzNoResult]="'Bạn chưa có đơn hàng nào'" nzTableLayout="fixed">
         <thead>
           <tr class="header">
-            <th nzWidth="40px">STT</th>
+            <th nzWidth="60px">STT</th>
             <th nzWidth="100px">Thời gian đặt</th>
             <th nzWidth="120px">Tên KH</th>
             <th nzWidth="100px">Số điện thoại</th>
@@ -42,7 +42,7 @@
     </nz-tab>
     <nz-tab nzTitle="Quản lý sản phẩm">
       <button nz-button nzType="primary" class="my-2" (click)="openModalCreate()">Thêm sản phẩm</button>
-      <nz-table nzBordered #basicTable [nzData]="productTable" [nzFrontPagination]="false"
+      <nz-table  #basicTable [nzData]="productTable" [nzFrontPagination]="false"
         [nzNoResult]="'Bạn chưa có sản phẩm nào'" [nzShowPagination]="false">
         <thead>
           <tr>
@@ -82,7 +82,47 @@
       </nz-table>
     </nz-tab>
 
-    <nz-tab nzTitle="Cấu hình ảnh bìa"> Content of Tab Pane 3 </nz-tab>
+    <nz-tab nzTitle="Cấu hình ảnh bìa">
+      <nz-table  #basicTable [nzData]="productTable" [nzFrontPagination]="false"
+        [nzNoResult]="'Bạn chưa có sản phẩm nào'" [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Hình ảnh</th>
+            <th>Tên sản phầm</th>
+            <th>Danh mục</th>
+            <th>Ghi chú</th>
+            <th>Giá</th>
+            <th>Kích cỡ</th>
+            <th>Tình trạng</th>
+            <th>Chiết khấu</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of basicTable.data; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <span *ngFor="let img of product.imgProduct">
+                <img src="{{getBaseImg(img)}}" height="30px" width="30px" />
+              </span>
+            </td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.note }}</td>
+            <td>{{ product.price | currency: "VND":true }}</td>
+            <td>{{ product.size }}</td>
+            <td>{{ product.status }}</td>
+            <td>- {{ product.priceSale || 0 }} %</td>
+            <td>
+              <button nz-button nzType="primary" class="mr-2" (click)="openModalUpdate(product)">Chỉnh sửa</button>
+              <button nz-button nzType="danger" (click)="openModalDelete(product)">Xóa</button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+    
   </nz-tabset>
 </div>
 
