@@ -9,16 +9,15 @@ import { AuthService } from "app/shared/auth/auth.service";
   styleUrls: ["./signin.component.scss"],
 })
 export class SigninComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
   public formLogin = new FormGroup({
     username: new FormControl("", Validators.required),
     password: new FormControl("", Validators.required),
     name: new FormControl("", Validators.required),
     avatar: new FormControl("", Validators.required),
     birthday: new FormControl("", Validators.required),
-    email: new FormControl("", Validators.required),
     phone: new FormControl("", Validators.required),
-    history: new FormControl("", Validators.required),
+    history: new FormControl([], Validators.required),
   });
 
   public register(formLogin: FormGroup) {
@@ -28,5 +27,6 @@ export class SigninComponent implements OnInit {
       .subscribe((data) => this.router.navigate(["./login"]));
   }
 
-  ngOnInit() {}
+
+  ngOnInit() { }
 }

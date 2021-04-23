@@ -18,11 +18,11 @@ export class AppConfigService {
         .toPromise()
         .then((config: IEnvironment) => {
           this.appConfig = config;
-          console.log('Production', { config });
+          // console.log('Production', { config });
         });
     } else {
       this.appConfig = environment;
-      console.log('Development', { environment });
+      // console.log('Development', { environment });
     }
   }
 
@@ -32,7 +32,6 @@ export class AppConfigService {
 }
 
 export const initializerFn = (appConfig: AppConfigService) => {
-  console.log('initializerFn works');
   return () => {
     appConfig.loadConfig();
   };

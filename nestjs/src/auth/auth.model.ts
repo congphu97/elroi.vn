@@ -1,13 +1,15 @@
 import { prop, modelOptions, } from '@typegoose/typegoose';
 export class Auth {
     @prop()
-    name: string
-    
-    @prop()
     username: string
+
 
     @prop()
     password: string
+
+    @prop()
+    name: string
+
 
     @prop()
     avatar: string
@@ -15,16 +17,16 @@ export class Auth {
     @prop()
     birthday: string
 
-    @prop()
-    email: string
 
     @prop()
-    phone: number
+    numberPhone: number
+
 
     @prop()
-    history: []
+    history: any[]
 
     @prop()
     role: string
 
 }
+

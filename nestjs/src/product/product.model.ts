@@ -1,5 +1,6 @@
 import { prop, } from '@typegoose/typegoose';
 export class Product {
+  
     @prop()
     productName: string
 
@@ -13,16 +14,21 @@ export class Product {
     @prop()
     status: string
     @prop()
-
     imgProduct: []
-    @prop()
 
+    @prop()
     price: number
+
+
+    @prop()
+    priceSale: number
 
     @prop()
     size: string
 
     @prop()
-    password: number
+    createdAt: string
 
+    @prop()
+    updatedAt: string
 }

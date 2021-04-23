@@ -1,19 +1,24 @@
 <div class="wrapper" style="margin-top:70px">
-    <div class="page-header " style="background-image: url('assets/img/antoine-barres.jpg')">
-        <div class="content-center">
-            <div class="container">
-                <div class="title-brand">
-                </div>
-            </div>
-        </div>
-        <h6 class=" category-absolute ml-auto mr-auto">
-
-        </h6>
+    <div class="">
+        <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let img of listBackground">
+                <img src="{{getBaseImg(img)}}">
+            </ng-template>
+        </ngb-carousel>
     </div>
     <div class="main">
         <div class="section" *ngIf="productList?.length > 0">
             <div class="container text-center">
-                <h3>Sản phẩm mới</h3>
+                <h3>{{title}}</h3>
+                <div class="container">
+                    <nz-select nzPlaceHolder="Sắp xếp" [(ngModel)]="filterOption"
+                        (ngModelChange)="changedSelect(filterOption)">
+                        <nz-option nzValue="t-c" nzLabel="Giá: Thấp đến Cao"></nz-option>
+                        <nz-option nzValue="c-t" nzLabel="Giá: Cao đến Thấp"></nz-option>
+                        <nz-option nzValue="a-z" nzLabel="Tên: Từ A - Z"></nz-option>
+                        <nz-option nzValue="z-a" nzLabel="Tên: Từ Z - A"></nz-option>
+                    </nz-select>
+                </div>
             </div>
             <div class="m-5">
                 <div class="row">
@@ -21,7 +26,7 @@
                         <div class="card page-carousel">
                             <ngb-carousel>
                                 <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
-                                    <img [routerLink]="['/detail', product._id]" src="http://localhost:8080/{{img}}" >
+                                    <img [routerLink]="['/detail', product._id]" src="{{getBaseImg(img)}}">
                                     <div class="carousel-caption">
                                         <p>{{product.productName}}</p>
                                     </div>
@@ -45,13 +50,5 @@
         <div class="section text-center" *ngIf="productList?.length < 1">
             <h5>Hiện tại sản phẩm đang được cập nhật. Vui lòng thử lại sau.</h5>
         </div>
-
     </div>
-</div>
-<div>
-    <ngb-alert type="{{getNotis()}}" class="float-right w-30" *ngIf="isNotis">
-        <div class="container">
-            abc
-        </div>
-    </ngb-alert>
 </div>

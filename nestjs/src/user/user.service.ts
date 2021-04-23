@@ -7,6 +7,7 @@ import { User } from './user.model';
 export class UserService {
     constructor(@InjectModel(User) private userModel: ReturnModelType<typeof User>) { }
     async createUser(user: User) {
+        console.log({user})
         const newUser = new this.userModel(user);
         return await newUser.save();
     }

@@ -1,8 +1,8 @@
-<nav class="p-0 navbar navbar-expand-lg fixed-top navbar-transparent shadow-sm " color-on-scroll="500" style="z-index:100">
+<nav class="p-0 navbar navbar-expand-lg fixed-top  shadow-sm " color-on-scroll="500" style="z-index:100">
     <div class="container">
         <div class="navbar-translate d-flex w-100">
             <a class="navbar-brand" style="color:black" [routerLink]="['/home']">Joelandrachel.VN</a>
-            <div class="d-lg-block d-none nav-item">
+            <div class="d-lg-block d-none nav-item mr-auto">
                 <ul class="navbar-nav w-100">
                     <li class="pt-1 ">
                         <a nz-dropdown class="nav-link" rel="tooltip" data-placement="bottom" [nzDropdownMenu]="menu1">
@@ -71,10 +71,10 @@
                     </li>
                 </ul>
             </div>
-            <ul class="navbar-nav ml-auto flex-row d-flex">
+            <ul class="navbar-nav flex-row d-flex">
                 <li class="nav-item" *ngIf="!isDocumentation()">
                     <a *ngIf="!user" class="nav-link" rel="tooltip" title="Đăng nhập" data-placement="bottom">
-                        <img src="../../../assets/svg/user.png" [routerLink]="['/signup']" height="20px" />
+                        <img src="../../../assets/svg/user.png" [routerLink]="['/login']" height="20px" />
                     </a>
                     <a *ngIf="user" nz-dropdown class="nav-link" rel="tooltip" title="Hi {{user.username}}"
                         data-placement="bottom" [nzDropdownMenu]="menu4">
@@ -84,7 +84,7 @@
 
                     <nz-dropdown-menu #menu4="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item *ngIf="user?.role == 'admin'" [routerLink]="['/admin']">Quản lý</li>
+                            <li nz-menu-item *ngIf="user?.role == 'admin'" [routerLink]="['../auth/dashboard']">Quản lý</li>
                             <li nz-menu-item [routerLink]="['/profile']">Hồ sơ</li>
                             <li nz-menu-item (click)="logout()">Đăng xuất</li>
                         </ul>
@@ -115,7 +115,7 @@
                     </nz-dropdown-menu>
                 </li>
             </ul>
-            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse"
+            <button class="pr-2 navbar-toggler navbar-burger" type="button" data-toggle="collapse"
                 data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false"
                 aria-label="Toggle navigation" (click)="sidebarToggle()">
                 <span class="navbar-toggler-bar"></span>

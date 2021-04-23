@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="wrapper">
     <div class="page-header" style="background-image: url('./assets/img/login-image.jpg');">
         <div class="filter"></div>
@@ -7,17 +9,24 @@
                     <div class="card card-register">
                         <h3 class="title">Đăng ký</h3>
                         <form [formGroup]="formLogin" class="register-form">
-                            <label>Tên tài khoản</label>
+                            <label>Email:</label>
                             <div class="input-group form-group-no-border">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-single-02"></i>
                                     </span>
                                 </div>
-
-                                <input type="text" class="form-control" placeholder="Nhập tên tài khoản"
-                                    formControlName="username"   autocomplete="false">
+                                <input type="text" class="form-control" placeholder="Nhập tên email"
+                                    formControlName="username" autocomplete="false" required>
                             </div>
+                            <div *ngIf="formLogin.get('username').invalid && (formLogin.get('username').dirty || formLogin.get('username').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formLogin.get('username').errors.required">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Trường
+                                    này là bắt buộc.
+                                </div>
+                            </div>
+
 
                             <label>Mật khẩu</label>
                             <div class="input-group form-group-no-border">
@@ -27,7 +36,14 @@
                                     </span>
                                 </div>
                                 <input type="password" class="form-control" placeholder="Nhập mật khẩu"
-                                    formControlName="password"    autocomplete="false">
+                                    formControlName="password" autocomplete="false">
+                            </div>
+                            <div *ngIf="formLogin.get('password').invalid && (formLogin.get('password').dirty || formLogin.get('password').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formLogin.get('password').errors.required">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Trường
+                                    này là bắt buộc.
+                                </div>
                             </div>
 
                             <label>Họ và tên</label>
@@ -38,30 +54,32 @@
                                     </span>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Nhập họ và tên"
-                                    formControlName="name"    autocomplete="false">
+                                    formControlName="name" autocomplete="false">
                             </div>
-
-                            <label>Email</label>
-                            <div class="input-group form-group-no-border">
-
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="nc-icon nc-email-85"></i>
-                                    </span>
+                            <div *ngIf="formLogin.get('name').invalid && (formLogin.get('name').dirty || formLogin.get('name').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formLogin.get('name').errors.required">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Trường
+                                    này là bắt buộc.
                                 </div>
-                                <input type="email" class="form-control" placeholder="Nhập Email"
-                                    formControlName="email"    autocomplete="false">
                             </div>
+
                             <label>Ngày sinh</label>
                             <div class="input-group form-group-no-border">
-
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="nc-icon nc-key-25"></i>
                                     </span>
                                 </div>
                                 <input type="date" class="form-control" placeholder="Chọn ngày sinh"
-                                    formControlName="birthday"    autocomplete="false">
+                                    formControlName="birthday" autocomplete="false">
+                            </div>
+                            <div *ngIf="formLogin.get('birthday').invalid && (formLogin.get('birthday').dirty || formLogin.get('birthday').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formLogin.get('birthday').errors.required">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Trường
+                                    này là bắt buộc.
+                                </div>
                             </div>
 
                             <label>Số điện thoại</label>
@@ -72,14 +90,22 @@
                                     </span>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Nhập số điện thoại"
-                                    formControlName="phone"    autocomplete="false">
+                                    formControlName="phone" autocomplete="false">
                             </div>
-                            <button class="btn btn-danger btn-block btn-round" (click)="register(formLogin)">Đăng kí</button>
+                            <div *ngIf="formLogin.get('phone').invalid && (formLogin.get('phone').dirty || formLogin.get('phone').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formLogin.get('phone').errors.required">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Trường
+                                    này là bắt buộc.
+                                </div>
+                            </div>
+                            <button class="btn btn-danger btn-block btn-round" [disabled]="formLogin.invalid" (click)="register(formLogin)">Đăng
+                                kí</button>
                         </form>
                     </div>
                 </div>
             </div>
-          
+
         </div>
     </div>
 </div>

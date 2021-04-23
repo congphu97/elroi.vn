@@ -26,6 +26,7 @@ export class UserController {
 
   @Post()
   async createUser(@Body() user: User): Promise<User> {
+    console.log({user})
     return await this.userService.createUser(user);
   }
 
@@ -51,4 +52,5 @@ export class UserController {
   async getUser(@Body() username: {}): Promise<User | null> {
     return await this.userService.getUser(username);
   }
+
 }

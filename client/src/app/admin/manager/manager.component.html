@@ -1,0 +1,21 @@
+<div class="d-flex h-100">
+  <div class="h-100 col-lg-2 col-4 p-0" style="background: #001529">
+    <div class="text-center my-2 border-bottom">
+      <img
+        src="https://i0.wp.com/w3codepen.com/wp-content/uploads/2019/10/login-form-using-html-css.png?resize=1280%2C634&ssl=1"
+        alt="Avatar" class="avatar">
+      <div class="text-center text-white my-2">Xin chào Admin</div>
+    </div>
+    <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item [routerLink]="['./orders']">Quản lý đơn hàng</li>
+      <li nz-menu-item [routerLink]="['./products']">Quản lý sản phẩm</li>
+      <li nz-menu-item [routerLink]="['./backgrounds']">Cấu hình ảnh bìa</li>
+      <li nz-menu-item [routerLink]="['./promos']">Quản lý mã khuyến mãi</li>
+      <li nz-menu-item [routerLink]="['../../']">Đăng xuất</li>
+
+    </ul>
+  </div>
+  <div class="w-100 m-2">
+    <router-outlet></router-outlet>
+  </div>
+</div>

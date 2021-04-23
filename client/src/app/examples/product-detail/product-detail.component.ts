@@ -5,7 +5,7 @@ import { AuthService } from "app/shared/auth/auth.service";
 import { IProduct } from "app/shared/interfaces/ui.interfaces";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import { tap } from "rxjs/operators";
-import { ProductService } from "../services/product.service";
+import { ProductService } from "../../shared/services/product.service";
 
 @Component({
   selector: "app-product-detail",
@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService,
     private appConfig: AppConfigService,
     private notification: NzNotificationService
-  ) {}
+  ) { }
   public apiImg = this.appConfig.config.api;
   public product: IProduct;
   public arrayNumber = [1, 2, 3, 4, 5];
@@ -29,15 +29,18 @@ export class ProductDetailComponent implements OnInit {
   public priceTotal: number = 0;
   ngOnInit(): void {
     const id = this.activeRoute.snapshot.params["id"];
-    this.productService
-      .getOneProduct(id)
-      .pipe(
-        tap((data: IProduct) => {
-          this.product = data;
-          this.priceTotal = this.product.price;
-        })
-      )
-      .subscribe();
+    if (id) {
+      this.productService
+        .getOneProduct(id)
+        .pipe(
+          tap((data: IProduct) => {
+            this.product = data;
+            this.priceTotal = this.product.price;
+          })
+        )
+        .subscribe();
+
+    }
   }
 
   addCart() {
@@ -48,7 +51,6 @@ export class ProductDetailComponent implements OnInit {
       size: this.selectedSize,
     };
     listLocal.push(valueItem);
-    console.log({ listLocal });
     localStorage.setItem("cart", JSON.stringify(listLocal));
     this.authService.setSubmit();
   }
@@ -73,7 +75,6 @@ export class ProductDetailComponent implements OnInit {
 
   public getSizeProduct(size) {
     const array = size.split(",");
-    console.log({ array });
     return array.map((size) => size.trim());
   }
 

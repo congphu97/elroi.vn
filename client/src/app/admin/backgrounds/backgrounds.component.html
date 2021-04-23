@@ -1,0 +1,52 @@
+<div class="header-content">
+ Cấu hình
+</div>
+<button nz-button nzType="primary" class="my-2" (click)="isVisibleBackground = true">Thêm ảnh bìa</button>
+<nz-table #backgroundTable1 [nzData]="backgroundTable" [nzFrontPagination]="false"
+    [nzNoResult]="'Bạn chưa có ảnh bìa nào'" [nzShowPagination]="false">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Hình ảnh</th>
+            <th>Danh mục</th>
+            <th>Số lượng</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let background of backgroundTable1.data; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+                <span *ngFor="let img of background.imgBackground" class="mx-1">
+                    <img src="{{getBaseImg(img)}}" height="30px" width="30px" />
+                </span>
+            </td>
+            <td>{{ background.category }}</td>
+            <td>{{ background.imgBackground.length}}</td>
+            <td>
+                <button nz-button nzType="primary" class="mr-2" (click)="openModalUpdateBackground(background)">Chỉnh
+                    sửa</button>
+                <button nz-button nzType="danger" (click)="openModalDeleteBackground(background)">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<nz-modal [(nzVisible)]="isVisibleBackground" nzTitle="{{ titleModal }}" nzClosable="false" nzCentered
+    (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="handleOkBackground(background)">
+    <form [formGroup]="backgroundForm">
+        <div class="d-flex">
+            <label class="col-3 p-2">Danh mục</label>
+            <select class="form-control" formControlName="category">
+                <option ngValue="trang-chu">Trang chủ</option>
+                <option ngValue="login">Đăng nhập / Đăng kí</option>
+                <option ngValue="product">Sản phẩm</option>
+
+            </select>
+        </div>
+        <label class="col-3 p-2">Hình ảnh</label>
+        <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload a file..." multiple />
+        <div>
+            <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180" />
+        </div>
+    </form>
+</nz-modal>

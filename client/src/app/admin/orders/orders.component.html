@@ -1,0 +1,38 @@
+<div class="header-content">
+    Quản lý đơn hàng
+</div>
+<nz-table [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [nzNoResult]="'Bạn chưa có đơn hàng nào'" nzTableLayout="fixed">
+    <thead>
+        <tr class="header">
+            <th nzWidth="60px">STT</th>
+            <th nzWidth="100px">Thời gian đặt</th>
+            <th nzWidth="120px">Tên KH</th>
+            <th nzWidth="100px">Số điện thoại</th>
+            <th nzWidth="200px">Địa chỉ</th>
+            <th nzWidth="100px">Tổng đơn</th>
+            <th nzWidth="100px">Giao hàng</th>
+            <th nzWidth="100px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orderTable; let i = index" (click)="openModelDetail(order)">
+            <td>{{ i + 1 }}</td>
+            <td>{{ order.createdAt | date: "dd/MM/yyyy hh:mm:ss" }}</td>
+            <td>{{ order.customerName }}</td>
+            <td>{{ order.numberPhone }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.totalPrice | currency: "VND":true }}</td>
+            <td>
+                <nz-switch [(ngModel)]="order.status" (ngModelChange)="changeStatus(order)"></nz-switch>
+            </td>
+            <td>
+                <button nz-button nzType="danger" (click)="openDeleteOrder(order)">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<nz-modal [(nzVisible)]="isOrderDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
+    (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteOrder(order._id)">
+    Bạn chắc chắn muốn Xóa đơn hàng này ?
+</nz-modal>

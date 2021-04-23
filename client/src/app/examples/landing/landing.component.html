@@ -57,7 +57,8 @@
                     </div>
                     <div *ngSwitchCase="1" class="d-flex h-100 flex-container">
                         <form class="flex-item-left" [formGroup]="orderForm">
-                            <h6>Thông tin giao hàng:</h6>
+                            <label>Bạn đã có  <a [routerLink]="['../signup']" >tài khoản</a> ? Đăng nhập để nhận nhiều khuyến mãi</label>
+                            <h6 class="font-weight-bold">Thông tin giao hàng:</h6>
                             <div class="d-flex  m-1">
                                 <label class="col-4 m-auto">Họ và tên</label>
                                 <input class="form-control" formControlName="username"

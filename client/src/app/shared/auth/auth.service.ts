@@ -34,6 +34,7 @@ export class AuthService {
   }
 
   register(body) {
+    console.log({ body })
     return this.http.post(this.api + "register", body);
   }
 
@@ -63,5 +64,14 @@ export class AuthService {
 
   setSubmit() {
     this.submit$$.next(this.getAuthenticated());
+  }
+
+  updateUser(id: string, body) {
+    return this.http.put(this.appConfig.config["api"] + 'user/' + id, body);
+  }
+
+  changePassword() {
+    // return this.http.post(this.api + "getUser", body);
+
   }
 }

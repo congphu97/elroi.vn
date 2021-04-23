@@ -6,9 +6,10 @@
     <div class="section profile-content" *ngIf="user">
         <div class="container">
             <div class="owner">
-                <div class="avatar">
+                <div class="avatar d-flex">
                     <img src="./assets/img/faces/joe-gardner-2.jpg" alt="Circle Image"
                         class="img-circle img-no-padding img-responsive">
+                    <h6 class="description"><i class="fa fa-camera" aria-hidden="true"></i> </h6>
                 </div>
                 <div class="name">
                     <h4 class="title">{{user.name}}<br /></h4>
@@ -19,12 +20,12 @@
             <div class="nav-tabs-navigation">
                 <div class="nav-tabs-wrapper">
                     <ngb-tabset [justify]="'center'">
-                        <ngb-tab title="Đơn hàng đã đặt">
+                        <ngb-tab title="Lịch sử đơn hàng">
                             <ng-template ngbTabContent>
                                 <div class="row following" id="follows">
                                     <div class="col-md-6 ml-auto mr-auto">
                                         <ul class="list-unstyled follows">
-                                            <li >
+                                            <li>
                                                 <div class="d-flex border-bottom">
                                                     <div class="col-4 m-auto">
                                                         <h6> STT</h6>
@@ -36,21 +37,25 @@
                                                         <h6> Tổng tiền</h6>
                                                     </div>
                                                 </div>
-                                                <ng-container *ngIf="historyList?.length >0" >
-                                                    <div class="d-flex  py-2" *ngFor="let orderHistory of historyList;let i = index">
-                                                        <div class="col-4 m-auto">
-                                                            {{i+1}}
-                                                        </div>
-                                                        <div class="col-4 m-auto">
-                                                                <p class="p-0 m-auto" *ngFor="let order of orderHistory.idProduct">
+                                                <ng-container *ngIf="historyList?.length >0">
+                                                    <div class="d-flex  py-2"
+                                                        *ngFor="let orderHistory of historyList;let i = index">
+                                                        <ng-container *ngIf="orderHistory">
+                                                            <div class="col-4 m-auto">
+                                                                {{i+1}}
+                                                            </div>
+                                                            <div class="col-4 m-auto">
+                                                                <p class="p-0 m-auto"
+                                                                    *ngFor="let order of orderHistory.idProduct">
                                                                     {{getProduct(order.id).productName}}
                                                                 </p>
-                                                        </div>
-                                                        <div class="col-4 m-auto">
-                                                            <p>
-                                                                {{orderHistory.totalPrice | currency : "VND":true}}
-                                                            </p>
-                                                        </div>
+                                                            </div>
+                                                            <div class="col-4 m-auto">
+                                                                <p>
+                                                                    {{orderHistory.totalPrice | currency : "VND":true}}
+                                                                </p>
+                                                            </div>
+                                                        </ng-container>
                                                     </div>
                                                 </ng-container>
                                                 <div *ngIf="historyList?.length < 1">
@@ -60,12 +65,156 @@
                                             <hr />
                                         </ul>
                                     </div>
+
                                 </div>
                             </ng-template>
                         </ngb-tab>
                         <ngb-tab title="Thông tin cá nhân">
                             <ng-template ngbTabContent>
-                                {{historyList | json}}
+                                <div class="text-center" *ngIf="mode =='default'">
+                                    <nz-descriptions nzTitle="Thông tin chi tiết" nzBordered
+                                        [nzColumn]="{ xxl: 2 , xl: 2 , lg: 2 , md: 2 , sm: 2 , xs: 1 }">
+                                        <nz-descriptions-item nzTitle="Họ và tên">{{user.name}}</nz-descriptions-item>
+                                        <nz-descriptions-item nzTitle="Ngày sinh">{{user.birthday || 'Vui lòng cập nhật
+                                            thông tin.'}}
+                                        </nz-descriptions-item>
+                                        <nz-descriptions-item nzTitle="Số điện thoại">{{user.numberPhone || 'Vui lòng cập nhật
+                                            thông tin.'}}
+                                        </nz-descriptions-item>
+                                    </nz-descriptions>
+                                    <div class="d-flex text- m-2">
+                                        <button class="m-1" (click)="mode='change-password'">Đổi mật khẩu</button>
+                                        <button class="m-1" (click)="mode='update'">Cập nhật</button>
+                                    </div>
+                                </div>
+                                <div class="card container" *ngIf="mode =='update'">
+                                    <h3 class="title">Cập nhật thông tin</h3>
+                                    <form [formGroup]="formProfile" class="register-form">
+                                        <div class="d-flex">
+                                            <div class="col-3">
+                                                <label class="pt-2">Họ và tên</label>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Nhập họ và tên"
+                                                formControlName="name" autocomplete="false">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="col-3"></label>
+                                            <div *ngIf="formProfile.get('name').invalid && (formProfile.get('name').dirty || formProfile.get('name').touched)"
+                                                class="w-100 alert alert-danger">
+                                                <div *ngIf="formProfile.get('name').errors.required">
+                                                    <i class="fa fa-exclamation-triangle text-warning"
+                                                        aria-hidden="true"></i> Trường
+                                                    này là bắt buộc.
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="d-flex">
+                                            <div class="col-3">
+                                                <label class="pt-2">Ngày sinh</label>
+                                            </div>
+                                            <input type="date" class="form-control" placeholder="Chọn ngày sinh"
+                                                formControlName="birthday" autocomplete="false">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="col-3"></label>
+                                            <div *ngIf="formProfile.get('birthday').invalid && (formProfile.get('birthday').dirty || formProfile.get('birthday').touched)"
+                                                class="w-100 alert alert-danger">
+                                                <div *ngIf="formProfile.get('birthday').errors.required">
+                                                    <i class="fa fa-exclamation-triangle text-warning"
+                                                        aria-hidden="true"></i> Trường
+                                                    này là bắt buộc.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex">
+                                            <div class="col-3">
+                                                <label class="pt-2">Số điện thoại</label>
+                                            </div>
+                                            <input type="number" class="form-control" placeholder="Nhập số điện thoại"
+                                                formControlName="numberPhone" autocomplete="false">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="col-3"></label>
+                                            <div *ngIf="formProfile.get('numberPhone').invalid && (formProfile.get('numberPhone').dirty || formProfile.get('numberPhone').touched)"
+                                                class="w-100 alert alert-danger">
+                                                <div *ngIf="formProfile.get('numberPhone').errors.required">
+                                                    <i class="fa fa-exclamation-triangle text-warning"
+                                                        aria-hidden="true"></i> Trường
+                                                    này là bắt buộc.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-danger m-2 btn-round" (click)="mode ='default'">Hủy
+                                            bỏ</button>
+                                        <button class="btn btn-danger m-2 btn-round" [disabled]="formProfile.invalid"
+                                            (click)="updateProfile(formProfile)">Cập nhật</button>
+                                    </form>
+                                </div>
+                                <div class="card container" *ngIf="mode =='change-password'">
+                                    <form [formGroup]="formPassword" class="register-form">
+                                        <div class="d-flex">
+                                            <div class="col-3">
+                                                <label class="pt-2">Mật khẩu cũ</label>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="Nhập mật khẩu cũ"
+                                                formControlName="passwordOld" autocomplete="false">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="col-3"></label>
+                                            <div *ngIf="formPassword.get('passwordOld').invalid && (formPassword.get('passwordOld').dirty || formPassword.get('passwordOld').touched)"
+                                                class="w-100 alert alert-danger">
+                                                <div *ngIf="formPassword.get('passwordOld').errors.required">
+                                                    <i class="fa fa-exclamation-triangle text-warning"
+                                                        aria-hidden="true"></i> Trường
+                                                    này là bắt buộc.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="col-3">
+                                                <label class="pt-2">Mật khẩu mới</label>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="Nhập mật khẩu mới"
+                                                formControlName="passwordNew" autocomplete="false">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="col-3"></label>
+                                            <div *ngIf="formPassword.get('passwordNew').invalid && (formPassword.get('passwordNew').dirty || formPassword.get('passwordNew').touched)"
+                                                class="w-100 alert alert-danger">
+                                                <div *ngIf="formPassword.get('passwordNew').errors.required">
+                                                    <i class="fa fa-exclamation-triangle text-warning"
+                                                        aria-hidden="true"></i> Trường
+                                                    này là bắt buộc.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="col-3">
+                                                <label class="pt-2">Nhập lại mật khẩu</label>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="Nhập lại mật khẩu"
+                                                formControlName="passwordRepeat" autocomplete="false">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="col-3"></label>
+                                            <div *ngIf="formPassword.get('passwordRepeat').invalid && (formPassword.get('passwordRepeat').dirty || formPassword.get('passwordRepeat').touched)"
+                                                class="w-100 alert alert-danger">
+                                                <div *ngIf="formPassword.get('passwordRepeat').errors.required">
+                                                    <i class="fa fa-exclamation-triangle text-warning"
+                                                        aria-hidden="true"></i> Trường
+                                                    này là bắt buộc.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-danger m-2 btn-round" (click)="mode ='default'">Hủy
+                                            bỏ</button>
+                                        <button class="btn btn-danger m-2 btn-round" [disabled]="formProfile.invalid"
+                                            (click)="changePassword(formPassword)">Đổi mật khẩu</button>
+                                    </form>
+                                </div>
                             </ng-template>
                         </ngb-tab>
                     </ngb-tabset>

@@ -47,7 +47,7 @@ var salt = bcrypt.genSaltSync(10);
 var h = "";
 var mongoose = require("mongoose");
 mongoose.connect(
-  "mongodb+srv://congphu:phu9844136@cluster0-ktfk5.gcp.mongodb.net/angular-jwt-token?retryWrites=true&w=majority",
+  "mongodb://phutc:TranCongPhu%40123456@103.231.189.190:27017/jandrvn",
   { useNewUrlParser: true, useUnifiedTopology: true },
   function (err) {
     if (err) {

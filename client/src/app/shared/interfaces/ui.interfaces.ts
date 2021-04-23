@@ -8,8 +8,8 @@ export interface IProduct {
   status: string;
   size: string;
   imgProduct: any;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IOrder {
@@ -30,8 +30,13 @@ export interface IUser {
   name: string;
   avatar: string;
   birthday: string;
-  email: string;
   phone: number;
   history: [];
   role: string;
+}
+
+
+export interface IBackground {
+  imgBackground: [];
+  category: string;
 }

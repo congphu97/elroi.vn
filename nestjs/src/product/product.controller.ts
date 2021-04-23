@@ -10,9 +10,9 @@ import { diskStorage } from 'multer';
 export class ProductController {
     constructor(private productService: ProductService) { }
 
-    @Get()
-    async listProducts(@Res() res): Promise<Product[] | null> {
-        const products = await this.productService.getProduct();
+    @Get('/:id')
+    async getOneProduct(@Res() res, @Param('id') id): Promise<Product[] | null> {
+        const products = await this.productService.getOneProduct(id);
         return res.status(HttpStatus.OK).json(products);
     }
 
@@ -28,13 +28,6 @@ export class ProductController {
         const newProduct = await this.productService.updateProduct(id, product);
         if (!newProduct) throw new NotFoundException('Update fail');
         return res.status(HttpStatus.OK).json(newProduct);
-    }
-
-
-    @Get('/:id')
-    async getOneProduct(@Res() res, @Param('id') id): Promise<Product[] | null> {
-        const products = await this.productService.getOneProduct(id);
-        return res.status(HttpStatus.OK).json(products);
     }
 
 
@@ -57,6 +50,14 @@ export class ProductController {
     async logFiles(@UploadedFiles() images, @Body() fileDto: any, @Res() res) {
         return res.send(images);
 
+    }
+
+
+    @Get()
+    async listProducts(@Query() query, @Res() res): Promise<Product[] | null> {
+        console.log({query})
+        const products = await this.productService.getProduct(query);
+        return res.status(HttpStatus.OK).json(products);
     }
 
     @Get('/img/:imgpath')

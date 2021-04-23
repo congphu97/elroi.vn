@@ -1,0 +1,51 @@
+<div class="wrapper" style="margin-top:70px">
+    <div class="">
+        <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let img of listBackground">
+                <img src="{{getBaseImg(img)}}">
+            </ng-template>
+        </ngb-carousel>
+    </div>
+    <div class="main">
+        <div class="section">
+            <div class="container text-center">
+                <h3>Sản phẩm mới</h3>
+                <h5 style="outline:none" [routerLink]="['/product','all']">Xem thêm</h5>
+            </div>
+            <div class="m-5">
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let product of listData">
+                        <div class="card page-carousel">
+                            <ngb-carousel>
+                                <ng-template ngbSlide *ngFor="let img of product?.imgProduct">
+                                    <img src="{{getBaseImg(img)}}" [routerLink]="['/detail', product._id]">
+                                    <div class="carousel-caption">
+                                        <p>{{product.productName}}</p>
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                            <div class="text-center w-100 p-2">
+                                <h6 class="font-weight-bold">{{product.productName}} </h6>
+                                <p *ngIf="!product.priceSale" class="font-weight-bold">{{product.price | currency :
+                                    "VND":true}}</p>
+                                <p *ngIf="product.priceSale"> <span class=" font-weight-bold text-danger">{{
+                                        calculatorSale(product) | currency : "VND":true}}</span>
+                                    <s class="m-0 pl-2">{{product.price | currency : "VND":true}} </s>
+                                    <span class="font-weight-bold text-danger">(-{{product.priceSale}} %)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisibleMiddle" nzCentered (nzOnCancel)="handleCancelMiddle()" nzFooter="tplFooter"
+    nzClosable="false" nzWidth="auto">
+    <img src="https://image.freepik.com/free-vector/realistic-grand-opening-background_52683-21098.jpg" height="250px"
+        width="350px">
+</nz-modal>

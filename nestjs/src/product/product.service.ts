@@ -11,8 +11,21 @@ export class ProductService {
         return await newProduct.save();
     }
 
-    async getProduct(): Promise<Product[]> {
-        return await this.productModel.find().exec();
+    async getOneProduct(id: string): Promise<Product> {
+        const newProduct = this.productModel.findById({ _id: id })
+        return newProduct;
+    }
+
+    async getProduct(query): Promise<Product[]> {
+        const customQuery = {
+            category: { $regex: new RegExp(query.category), $options: 'i' },
+
+        };
+        query = Object.assign(query, customQuery);
+        const newProduct = this.productModel
+            .find(query)
+            .exec();
+        return newProduct;
     }
 
 
@@ -31,8 +44,5 @@ export class ProductService {
         return newProduct;
     }
 
-    async getOneProduct(id: string): Promise<Product> {
-        const newProduct = this.productModel.findOne({ _id: id })
-        return newProduct;
-    }
+
 }

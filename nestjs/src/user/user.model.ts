@@ -19,9 +19,6 @@ export class User {
 
 
     @prop()
-    email: string
-
-    @prop()
     numberPhone: number
 
 

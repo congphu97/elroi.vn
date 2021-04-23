@@ -1,0 +1,68 @@
+<div class="header-content">
+    Quản lý mã khuyến mãi
+</div>
+<!-- <nz-table [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [nzNoResult]="'Bạn chưa có đơn hàng nào'" nzTableLayout="fixed">
+    <thead>
+        <tr class="header">
+            <th nzWidth="60px">STT</th>
+            <th nzWidth="100px">Thời gian đặt</th>
+            <th nzWidth="120px">Tên KH</th>
+            <th nzWidth="100px">Số điện thoại</th>
+            <th nzWidth="200px">Địa chỉ</th>
+            <th nzWidth="100px">Tổng đơn</th>
+            <th nzWidth="100px">Giao hàng</th>
+            <th nzWidth="100px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orderTable; let i = index" (click)="openModelDetail(order)">
+            <td>{{ i + 1 }}</td>
+            <td>{{ order.createdAt | date: "dd/MM/yyyy hh:mm:ss" }}</td>
+            <td>{{ order.customerName }}</td>
+            <td>{{ order.numberPhone }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.totalPrice | currency: "VND":true }}</td>
+            <td>
+                <nz-switch [(ngModel)]="order.status" (ngModelChange)="changeStatus(order)"></nz-switch>
+            </td>
+            <td>
+                <button nz-button nzType="danger" (click)="openDeleteOrder(order)">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table> -->
+<nz-modal [(nzVisible)]="isOrderDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
+    (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteOrder(order._id)">
+    Bạn chắc chắn muốn Xóa đơn hàng này ?
+</nz-modal>
+
+<form [formGroup]="formPromo">
+    <div class="d-flex">
+        <label class="col-3 p-2">Mã khuyến mãi</label>
+        <input type="text" formControlName="code" class="form-control " />
+    </div>
+    <div class="d-flex">
+        <label class="col-3 p-2">Hình thức khuyến mãi</label>
+        <select class="form-control" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}">
+            <option ngValue="discountPercent">Theo phần trăm đơn hàng</option>
+            <option ngValue="discountPrice">Theo số tiền trực tiếp</option>
+        </select>
+    </div>
+    <div class="d-flex py-2" *ngIf="discount">
+        <label class="col-3 p-2">Giảm giá</label>
+        <input *ngIf="discount == 'discountPercent'" type="number" formControlName="discountPercent" class="form-control " />
+        <input *ngIf="discount == 'discountPrice'" type="number" formControlName="discountPrice" class="form-control " />
+    </div>
+    <div class="d-flex">
+        <label class="col-3 p-2">Hạn sử dụng</label>
+        <input type="text" formControlName="exprireDate" class="form-control " />
+    </div>
+    <div class="d-flex">
+        <label class="col-3 p-2">Điều kiện</label>
+        <select class="form-control" formControlName="condition">
+            <option ngValue="trang-chu">Tối thiểu từ 2 đơn hàng trở lên</option>
+            <option ngValue="login">Tối thiểu từ 300.000 VND</option>
+        </select>
+    </div>
+</form>

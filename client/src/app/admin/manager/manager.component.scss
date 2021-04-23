@@ -1,0 +1,25 @@
+label {
+    font-weight: 500;
+}
+
+.wrapper {
+    margin-top: 200px;
+}
+
+::ng-deep .ant-table-thead > tr > th {
+    background: #c1c0b6;
+}
+::ng-deep .ant-descriptions-item-label {
+    font-weight: 600;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.header-content {
+    height: 30px;
+}

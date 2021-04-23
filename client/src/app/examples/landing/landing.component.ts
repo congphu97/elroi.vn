@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "app/shared/auth/auth.service";
 import { IOrder, IProduct, IUser } from "app/shared/interfaces/ui.interfaces";
-import { combineLatest, concat, forkJoin, from, merge, of } from "rxjs";
-import { flatMap, map, reduce, switchMap, tap } from "rxjs/operators";
-import { OrdersService } from "../services/orders.service";
-import { ProductService } from "../services/product.service";
+import { forkJoin, from, of } from "rxjs";
+import { flatMap, tap } from "rxjs/operators";
+import { OrdersService } from "../../shared/services/orders.service";
+import { ProductService } from "../../shared/services/product.service";
 
 @Component({
   selector: "app-landing",
@@ -18,7 +18,7 @@ export class LandingComponent implements OnInit {
     private authService: AuthService,
     private productService: ProductService,
     private OrdersService: OrdersService
-  ) {}
+  ) { }
   private listData$ = (id: string) => this.productService.getOneProduct(id);
   ngOnInit() {
     this.configCart();
@@ -26,7 +26,7 @@ export class LandingComponent implements OnInit {
   }
   public listOfData = [];
   public listCart;
-  public totalPrice:number = 0;
+  public totalPrice: number = 0;
   public user: IUser;
   public orderForm = new FormGroup({
     username: new FormControl("", Validators.required),
@@ -41,13 +41,14 @@ export class LandingComponent implements OnInit {
     from(this.listCart)
       .pipe(
         flatMap((item: any) =>
-          forkJoin(this.listData$(item._id), of(item.number),of(item.size))
+          forkJoin(this.listData$(item._id), of(item.number), of(item.size))
         ),
         tap((data) => {
+          if (!data[0]) return
           this.listOfData.push({
             product: data[0],
             number: data[1],
-            size:data[2]
+            size: data[2]
           });
         })
       )
@@ -74,6 +75,7 @@ export class LandingComponent implements OnInit {
   }
 
   public checkDisable(key: string) {
+    if (!this.user) return
     return this.user[key] ? true : false;
   }
   pre(): void {
@@ -119,7 +121,7 @@ export class LandingComponent implements OnInit {
     return (product.price * (100 - priceSale)) / 100;
   }
 
-  public changeSelect(product:IProduct,value: number)  {
+  public changeSelect(product: IProduct, value: number) {
     return this.calculatorSale(product) * value
   }
 }

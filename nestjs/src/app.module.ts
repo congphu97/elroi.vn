@@ -12,6 +12,7 @@ import { DatabaseConfig } from './configuration/database';
 import { AppController } from './app.controller';
 import { OrderModule } from './order/order.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { BackgroundModule } from './background/background.module';
 // console.log(process.env);
 
 @Module({
@@ -20,7 +21,19 @@ import { MulterModule } from '@nestjs/platform-express';
     UserModule,
     ProductModule,
     OrderModule,
-    TypegooseModule.forRoot('mongodb://localhost:27017/jandrvn', { useNewUrlParser: true, useUnifiedTopology: true }),
+    BackgroundModule,
+    // TypegooseModule.forRoot('mongodb://localhost:27017/jandrvn', {
+    //   auth: {
+    //     user: "phutc",
+    //     password: "TranCongPhu@123456",
+    //   }, useNewUrlParser: true, useUnifiedTopology: true,
+    // }),
+    TypegooseModule.forRoot('mongodb://103.231.189.190:27017/jandrvn', {
+      auth: {
+        user: "phutc",
+        password: "TranCongPhu@123456",
+      }, useNewUrlParser: true, useUnifiedTopology: true,
+    }),
     MulterModule.register({
       dest: './uploads',
     }),
