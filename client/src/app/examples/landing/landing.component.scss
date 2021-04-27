@@ -23,6 +23,7 @@ button {
   display: flex;
   flex-direction: row;
   text-align: center;
+  height: 500px;
 }
 
 .flex-item-left {
@@ -51,10 +52,15 @@ button {
 ::ng-deep nz-table {
   height: calc(100% - 30px);
   overflow: auto;
-  max-height:500px
+  max-height: 500px;
 }
 
 .payment {
-  height:30px;
-  width:100%
+  height: 100px;
+  width: 100%;
+}
+
+::ng-deep nz-table {
+  height: calc(100% - 100px);
+  overflow: auto;
 }

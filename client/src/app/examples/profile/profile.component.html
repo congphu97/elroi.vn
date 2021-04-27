@@ -27,13 +27,16 @@
                                         <ul class="list-unstyled follows">
                                             <li>
                                                 <div class="d-flex border-bottom">
-                                                    <div class="col-4 m-auto">
+                                                    <div class="col-3 m-auto">
                                                         <h6> STT</h6>
                                                     </div>
-                                                    <div class="col-4 m-auto">
+                                                    <div class="col-3 m-auto">
+                                                        <h6> Thời gian đặt</h6>
+                                                    </div>
+                                                    <div class="col-3 m-auto">
                                                         <h6> Đơn hàng</h6>
                                                     </div>
-                                                    <div class="col-4 m-auto">
+                                                    <div class="col-3 m-auto">
                                                         <h6> Tổng tiền</h6>
                                                     </div>
                                                 </div>
@@ -41,16 +44,23 @@
                                                     <div class="d-flex  py-2"
                                                         *ngFor="let orderHistory of historyList;let i = index">
                                                         <ng-container *ngIf="orderHistory">
-                                                            <div class="col-4 m-auto">
+                                                            <div class="col-3 m-auto">
                                                                 {{i+1}}
                                                             </div>
-                                                            <div class="col-4 m-auto">
+                                                            <div class="col-3 m-auto">
+                                                                <p class="p-0 m-auto"
+                                                                    *ngFor="let order of orderHistory.idProduct">
+                                                                    <!-- {{getProduct(order.id) | json}} -->
+                                                                    {{getProduct(order.id).updatedAt | date: "dd/MM/yyyy hh:mm:ss"  }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-3 m-auto">
                                                                 <p class="p-0 m-auto"
                                                                     *ngFor="let order of orderHistory.idProduct">
                                                                     {{getProduct(order.id).productName}}
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 m-auto">
+                                                            <div class="col-3 m-auto">
                                                                 <p>
                                                                     {{orderHistory.totalPrice | currency : "VND":true}}
                                                                 </p>
@@ -78,7 +88,8 @@
                                         <nz-descriptions-item nzTitle="Ngày sinh">{{user.birthday || 'Vui lòng cập nhật
                                             thông tin.'}}
                                         </nz-descriptions-item>
-                                        <nz-descriptions-item nzTitle="Số điện thoại">{{user.numberPhone || 'Vui lòng cập nhật
+                                        <nz-descriptions-item nzTitle="Số điện thoại">{{user.numberPhone || 'Vui lòng
+                                            cập nhật
                                             thông tin.'}}
                                         </nz-descriptions-item>
                                     </nz-descriptions>

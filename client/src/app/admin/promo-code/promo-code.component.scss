@@ -1,3 +1,18 @@
 label {
     font-weight: 500;
 }
+
+.header-content {
+    height: 40px;
+}
+
+.body-content {
+    height: calc(100% - 40px);
+    overflow: auto;
+
+}
+
+::ng-deep nz-table {
+    overflow: auto;
+    height: calc(100% - 40px);
+}

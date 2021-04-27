@@ -1,5 +1,7 @@
-<div class="header-content">
-    Quản lý sản phẩm
+<div class="header-content border-bottom">
+    <p class="p-2 text-center font-weight-bold">
+        Quản lý sản phẩm
+    </p>
 </div>
 <button nz-button nzType="primary" class="my-2" (click)="openModalCreate()">Thêm sản phẩm</button>
 <nz-table #basicTable [nzData]="productTable" [nzFrontPagination]="false" [nzNoResult]="'Bạn chưa có sản phẩm nào'"

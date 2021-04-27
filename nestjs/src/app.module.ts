@@ -13,7 +13,7 @@ import { AppController } from './app.controller';
 import { OrderModule } from './order/order.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { BackgroundModule } from './background/background.module';
-// console.log(process.env);
+import { PromoModule } from './promo/promo.module';
 
 @Module({
   imports: [
@@ -22,6 +22,7 @@ import { BackgroundModule } from './background/background.module';
     ProductModule,
     OrderModule,
     BackgroundModule,
+    PromoModule,
     // TypegooseModule.forRoot('mongodb://localhost:27017/jandrvn', {
     //   auth: {
     //     user: "phutc",

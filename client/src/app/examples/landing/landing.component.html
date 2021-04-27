@@ -13,9 +13,9 @@
                         <div class="h-100">
                             <div class="col-md-8 mr-auto ml-auto">
                                 <h3 class="title">Giỏ hàng</h3>
-                                <h5 class="description">
-                                    Tổng số đơn hàng: {{count}}
-                                </h5>
+                                <h6 class="description">
+                                    Tổng số đơn hàng hiện có: {{count}}
+                                </h6>
                                 <br>
                                 <nz-table #basicTable [nzData]="listCart" [nzFrontPagination]="false"
                                     [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
@@ -38,15 +38,21 @@
                                             <td> {{data.size}} </td>
                                             <td>
                                                 <p *ngIf="!data.product.priceSale" class="font-weight-bold">{{
-                                                    changeSelect(data.product ,data.number) | currency : "VND":true}}</p>
-                                                <p *ngIf="data.product.priceSale"> <span class=" font-weight-bold text-danger">{{
-                                                    changeSelect(data.product,data.number) | currency : "VND":true}}</span>
-                                                    <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}} </s>
-                                                    <span class="font-weight-bold text-danger">(-{{data.product.priceSale}} %)</span>
+                                                    changeSelect(data.product ,data.number) | currency : "VND":true}}
+                                                </p>
+                                                <p *ngIf="data.product.priceSale"> <span
+                                                        class=" font-weight-bold text-danger">{{
+                                                        changeSelect(data.product,data.number) | currency :
+                                                        "VND":true}}</span>
+                                                    <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}}
+                                                    </s>
+                                                    <span
+                                                        class="font-weight-bold text-danger">(-{{data.product.priceSale}}
+                                                        %)</span>
                                                 </p>
                                             </td>
                                             <td>
-                                                <button>Hủy bỏ</button>
+                                                <button class="btn" nzType="default">Hủy bỏ</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -55,18 +61,17 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngSwitchCase="1" class="d-flex h-100 flex-container">
+                    <div *ngSwitchCase="1" class="d-flex  flex-container">
                         <form class="flex-item-left" [formGroup]="orderForm">
-                            <label>Bạn đã có  <a [routerLink]="['../signup']" >tài khoản</a> ? Đăng nhập để nhận nhiều khuyến mãi</label>
+                            <ng-container *ngIf="!user.username">
+                                <label>Bạn đã có <a [routerLink]="['../signup']">tài khoản</a> ? Đăng nhập để nhận nhiều
+                                    khuyến mãi</label>
+                            </ng-container>
                             <h6 class="font-weight-bold">Thông tin giao hàng:</h6>
                             <div class="d-flex  m-1">
                                 <label class="col-4 m-auto">Họ và tên</label>
                                 <input class="form-control" formControlName="username"
                                     [attr.disabled]="checkDisable('username')">
-                            </div>
-                            <div class="d-flex  m-1">
-                                <label class="col-4 m-auto">Email</label>
-                                <input class="form-control" formControlName="email">
                             </div>
                             <div class="d-flex  m-1">
                                 <label class="col-4 m-auto">Số điện thoại</label>
@@ -84,7 +89,8 @@
                                 <strong>Lưu ý:</strong>
                                 <p class="p-0">
                                     1. Đơn hàng sẽ được xác nhận thông qua email hoặc bộ phận sale sẽ liên lạc với bạn
-                                    trong 24h kể từ khi đơn hàng hoàn thành để xác nhận: thông tin nhận hàng, tổng hoá đơn và
+                                    trong 24h kể từ khi đơn hàng hoàn thành để xác nhận: thông tin nhận hàng, tổng hoá
+                                    đơn và
                                     thời gian giao hàng. </p><br>
                                 <p class="p-0">
                                     2. Đơn hàng của bạn sẽ được gửi đi trong 24h sau khi xác nhận, thời gian nhận hàng
@@ -96,36 +102,55 @@
                         </form>
                         <div class=" flex-item-right">
                             <nz-table #basicTable [nzData]="listCart" [nzFrontPagination]="false"
-                            [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
-                            [nzShowPagination]="false">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Số lượng</th>
-                                    <th>Kích cỡ</th>
-                                    <th>Giá</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of listOfData;let i = index;">
-                                    <td>{{ i +1 }}</td>
-                                    <td>{{ data.product.productName }}</td>
-                                    <td>{{ data.number }}</td>
-                                    <td> {{data.size}} </td>
-                                    <td>
-                                        <p *ngIf="!data.product.priceSale" class="font-weight-bold">{{
-                                            changeSelect(data.product ,data.number) | currency : "VND":true}}</p>
-                                        <p *ngIf="data.product.priceSale"> <span class=" font-weight-bold text-danger">{{
-                                            changeSelect(data.product,data.number) | currency : "VND":true}}</span>
-                                            <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}} </s>
-                                            <span class="font-weight-bold text-danger">(-{{data.product.priceSale}} %)</span>
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </nz-table>
-                        <h6 class="font-weight-bold payment p-3">Cần thanh toán : <strong>{{totalPrice  | currency : "VND":true}}</strong></h6>
+                                [nzNoResult]="'Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm nhé ^^'"
+                                [nzShowPagination]="false">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Kích cỡ</th>
+                                        <th>Giá</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of listOfData;let i = index;">
+                                        <td>{{ i +1 }}</td>
+                                        <td>{{ data.product.productName }}</td>
+                                        <td>{{ data.number }}</td>
+                                        <td> {{data.size}} </td>
+                                        <td>
+                                            <p *ngIf="!data.product.priceSale" class="font-weight-bold">{{
+                                                changeSelect(data.product ,data.number) | currency : "VND":true}}</p>
+                                            <p *ngIf="data.product.priceSale"> <span
+                                                    class=" font-weight-bold text-danger">{{
+                                                    changeSelect(data.product,data.number) | currency :
+                                                    "VND":true}}</span>
+                                                <s class="m-0 pl-2">{{data.product.price | currency : "VND":true}} </s>
+                                                <span class="font-weight-bold text-danger">(-{{data.product.priceSale}}
+                                                    %)</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <div class="payment">
+                                <div class="d-flex m-1">
+                                    <label class="col-4 m-auto">Nhập mã khuyến mãi: </label>
+                                    <input class="form-control" placeholder="Nhập mã khuyến mãi"
+                                        [(ngModel)]="discountCode"
+                                        (change)="discountPromoCode(totalPrice,discountCode)">
+                                </div>
+                                <h6 class="font-weight-bold p-3">Cần thanh toán :
+                                    <strong *ngIf="!promo">{{totalPrice | currency : "VND":true}}</strong>
+                                    <strong *ngIf="promo && promo">
+                                        <s class="m-0 pl-2">{{totalPrice | currency : "VND":true}} </s>
+                                        <span class=" font-weight-bold text-danger">{{
+                                            promo| currency : "VND":true}}</span>
+                                    </strong>
+
+                                </h6>
+                            </div>
                         </div>
                     </div>
                     <div *ngSwitchCase="2">
@@ -143,14 +168,14 @@
                 </div>
                 <div *ngIf="current === 1">
                     <button class="btn" nzType="default" (click)="pre()">
-                        Giỏ hàng
+                        Quay lại
                     </button>
                     <button class="btn" nzType="default" [disabled]="orderForm.invalid" (click)="complete()">
                         Hoàn tất đơn hàng
                     </button>
                 </div>
                 <div *ngIf="current === 2">
-                    <button class="btn" nzType="default"  [routerLink]="['/home']">
+                    <button class="btn" nzType="default" [routerLink]="['/home']">
                         Tiếp tục mua sắm
                     </button>
 

@@ -36,7 +36,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { ProductsComponent } from "./products/products.component";
 import { BackgroundsComponent } from "./backgrounds/backgrounds.component";
 import { PromoCodeComponent } from './promo-code/promo-code.component';
-
+import { NzInputModule } from 'ng-zorro-antd/input';
 @NgModule({
     imports: [
         CommonModule,
@@ -62,7 +62,8 @@ import { PromoCodeComponent } from './promo-code/promo-code.component';
         NzCarouselModule,
         SharedModule,
         AdminRoutingModule,
-        SharedModule
+        SharedModule,
+        NzInputModule
     ],
     declarations: [
 
@@ -71,8 +72,6 @@ import { PromoCodeComponent } from './promo-code/promo-code.component';
         OrdersComponent,
         BackgroundsComponent,
         PromoCodeComponent,
-        // SignupComponent, SigninComponent
-
     ],
     providers: [ProductService, OrdersService, BackgroundService,
     ],

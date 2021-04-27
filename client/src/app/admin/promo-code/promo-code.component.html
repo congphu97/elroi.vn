@@ -1,68 +1,123 @@
-<div class="header-content">
-    Quản lý mã khuyến mãi
-</div>
-<!-- <nz-table [nzData]="orderTable" [nzFrontPagination]="false" [nzShowPagination]="false"
-    [nzNoResult]="'Bạn chưa có đơn hàng nào'" nzTableLayout="fixed">
-    <thead>
-        <tr class="header">
-            <th nzWidth="60px">STT</th>
-            <th nzWidth="100px">Thời gian đặt</th>
-            <th nzWidth="120px">Tên KH</th>
-            <th nzWidth="100px">Số điện thoại</th>
-            <th nzWidth="200px">Địa chỉ</th>
-            <th nzWidth="100px">Tổng đơn</th>
-            <th nzWidth="100px">Giao hàng</th>
-            <th nzWidth="100px">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let order of orderTable; let i = index" (click)="openModelDetail(order)">
-            <td>{{ i + 1 }}</td>
-            <td>{{ order.createdAt | date: "dd/MM/yyyy hh:mm:ss" }}</td>
-            <td>{{ order.customerName }}</td>
-            <td>{{ order.numberPhone }}</td>
-            <td>{{ order.address }}</td>
-            <td>{{ order.totalPrice | currency: "VND":true }}</td>
-            <td>
-                <nz-switch [(ngModel)]="order.status" (ngModelChange)="changeStatus(order)"></nz-switch>
-            </td>
-            <td>
-                <button nz-button nzType="danger" (click)="openDeleteOrder(order)">Xóa</button>
-            </td>
-        </tr>
-    </tbody>
-</nz-table> -->
-<nz-modal [(nzVisible)]="isOrderDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
-    (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteOrder(order._id)">
-    Bạn chắc chắn muốn Xóa đơn hàng này ?
-</nz-modal>
+<div class="d-sm-block d-none h-100">
+    <div class="header-content border-bottom">
+        <p class="p-2 text-center font-weight-bold">
+            Quản lý mã khuyến mãi
+        </p>
+    </div>
+    <div class="d-flex body-content ">
+        <form [formGroup]="formPromo" class="col-4 p-0 h-50  d-sm-block d-none">
+            <div class="card-header border-top">
+                Tạo nhanh mã khuyến mãi
+            </div>
+            <div class="card-body">
+                <div class="d-flex">
+                    <label class="col-3 p-2">Mã khuyến mãi</label>
+                    <input type="text" formControlName="code" class="form-control " />
+                </div>
+                <div class="d-flex">
+                    <label class="col-3 p-2">Hình thức khuyến mãi</label>
+                    <select class="form-control" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}">
+                        <option ngValue="discountPercent">Theo phần trăm đơn hàng</option>
+                        <option ngValue="discountPrice">Theo số tiền trực tiếp</option>
+                    </select>
+                </div>
+                <div class="d-flex py-2" *ngIf="discount">
+                    <label class="col-3 p-2">Giảm giá</label>
+                    <input *ngIf="discount == 'discountPercent'" type="number" formControlName="discountPercent"
+                        class="form-control " />
+                    <input *ngIf="discount == 'discountPrice'" type="number" formControlName="discountPrice"
+                        class="form-control " />
+                </div>
+                <div class="d-flex">
+                    <label class="col-3 p-2">Hạn sử dụng</label>
+                    <input type="date" formControlName="exprireDate" class="form-control " />
+                </div>
+                <div class="d-flex">
+                    <label class="col-3 p-2">Điều kiện áp dụng</label>
+                    <select class="form-control" formControlName="condition">
+                        <option ngValue="toi-thieu-2-don-hang">Tối thiểu từ 2 đơn hàng trở lên</option>
+                        <option ngValue="toi-thieu-300k">Tối thiểu từ 300.000 VND</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button nz-button nzType="primary" (click)="createPromo(formPromo)">Tạo</button>
+            </div>
+            <div class="h-100 border-top">
+                <div class="card-header">Thông tin chi tiết</div>
+                <div class="card-body">
+                    <nz-descriptions *ngIf="promo" nzBordered
+                        [nzColumn]="{ xxl: 1, xl: 1 , lg: 1 , md: 1 , sm: 1 , xs: 1 }">
+                        <nz-descriptions-item nzTitle="Mã khuyến mãi">{{promo.code }}</nz-descriptions-item>
+                        <nz-descriptions-item nzTitle="Giảm giá">{{ promo.discountPercent || promo.discountPrice}}
+                        </nz-descriptions-item>
+                        <nz-descriptions-item nzTitle="Điều kiện áp dụng">
+                            {{ promo.condition}}
+                        </nz-descriptions-item>
+                        <nz-descriptions-item nzTitle="Hạn sử dụng">{{ promo.exprireDate | date: "dd/MM/yyyy"}}
+                        </nz-descriptions-item>
+                        <nz-descriptions-item nzTitle="Tình trạng">
+                            <span *ngIf="checkStatusCode(promo.exprireDate)" class="label label-success">Còn hạn sử
+                                dụng</span>
+                            <span *ngIf="!checkStatusCode(promo.exprireDate)" class="label label-danger">Hết hạn sử
+                                dụng</span>
+                        </nz-descriptions-item>
+                    </nz-descriptions>
+                    <ng-container *ngIf="!promo">
+                        Chọn để xem thông tin chi tiết
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+        <div class="px-2 h-100 border-left">
+            <div class="d-flex pt-2 header-content">
+                <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input type="text" class="mr-auto" nz-input placeholder="Tìm theo mã khuyến mãi" />
+                </nz-input-group>
+                <ng-template #suffixIconSearch>
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </ng-template>
+                <button nz-button nzType="primary" class="ml-2 d-sm-none d-block" (click)="isCreatePromo=true">Thêm sản
+                    phẩm</button>
+            </div>
+            <nz-table class="pt-2 content-body" [nzData]="promoTable" [nzFrontPagination]="false" [nzShowPagination]="false"
+                [nzNoResult]="'Bạn chưa có đơn hàng nào'" nzTableLayout="fixed">
+                <thead>
+                    <tr class="header">
+                        <th nzWidth="60px">STT</th>
+                        <th>Mã khuyến mãi</th>
+                        <th>Giảm giá</th>
+                        <th>Hạn sử dụng </th>
+                        <th>Tình trạng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let promo of promoTable; let i = index" (click)="selectPromo(promo)">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ promo.code }}</td>
+                        <td>{{ promo.discountPercent || promo.discountPrice}}</td>
+                        <td>{{ promo.exprireDate | date: "dd/MM/yyyy"}}</td>
+                        <td> <span *ngIf="checkStatusCode(promo.exprireDate)" class="label label-success">Còn hạn sử
+                                dụng</span>
+                            <span *ngIf="!checkStatusCode(promo.exprireDate)" class="label label-danger">Hết hạn sử
+                                dụng</span>
+                        </td>
+                        <td>
+                            <button nz-button nzType="danger" (click)="createPromo(formPromo)">Xóa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
 
-<form [formGroup]="formPromo">
-    <div class="d-flex">
-        <label class="col-3 p-2">Mã khuyến mãi</label>
-        <input type="text" formControlName="code" class="form-control " />
+
     </div>
-    <div class="d-flex">
-        <label class="col-3 p-2">Hình thức khuyến mãi</label>
-        <select class="form-control" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}">
-            <option ngValue="discountPercent">Theo phần trăm đơn hàng</option>
-            <option ngValue="discountPrice">Theo số tiền trực tiếp</option>
-        </select>
-    </div>
-    <div class="d-flex py-2" *ngIf="discount">
-        <label class="col-3 p-2">Giảm giá</label>
-        <input *ngIf="discount == 'discountPercent'" type="number" formControlName="discountPercent" class="form-control " />
-        <input *ngIf="discount == 'discountPrice'" type="number" formControlName="discountPrice" class="form-control " />
-    </div>
-    <div class="d-flex">
-        <label class="col-3 p-2">Hạn sử dụng</label>
-        <input type="text" formControlName="exprireDate" class="form-control " />
-    </div>
-    <div class="d-flex">
-        <label class="col-3 p-2">Điều kiện</label>
-        <select class="form-control" formControlName="condition">
-            <option ngValue="trang-chu">Tối thiểu từ 2 đơn hàng trở lên</option>
-            <option ngValue="login">Tối thiểu từ 300.000 VND</option>
-        </select>
-    </div>
-</form>
+    <nz-modal [(nzVisible)]="isOrderDelete" nzClosable='false' nzTitle="Yêu cầu xác nhận ?" nzCentered
+        (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="deleteOrder(order._id)">
+        Bạn chắc chắn muốn Xóa đơn hàng này ?
+    </nz-modal>
+</div>
+<div class="d-sm-none d-block">
+    Vui lòng mở rộng để xem thông tin chi tiết
+</div>

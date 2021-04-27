@@ -40,3 +40,11 @@ export interface IBackground {
   imgBackground: [];
   category: string;
 }
+
+export interface IPromo {
+  code: string;
+  discountPercent: number;
+  discountPrice: number;
+  exprireDate: string;
+  condition: string;
+}

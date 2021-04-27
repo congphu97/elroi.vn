@@ -26,7 +26,6 @@ export class BackgroundsComponent implements OnInit {
   constructor(
     private appConfig: AppConfigService,
     private productService: ProductService,
-
     private backgroundService: BackgroundService
   ) { }
 
